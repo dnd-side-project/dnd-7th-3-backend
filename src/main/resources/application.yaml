@@ -1,0 +1,45 @@
+# active spring profile
+spring:
+   profiles:
+      active: dev
+
+---
+# common spring configuration
+spring:
+   http:
+      encoding:
+         charset: UTF-8
+         enabled: true
+         force: true
+
+---
+# spring dev profile configuration
+spring:
+   profiles: dev
+   datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: ${db.url}
+      username: ${db.username}
+      password: ${db.password} 
+   jpa:
+      hibernate:
+         ddl-auto: create #create update none
+         naming:
+            physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+         show-sql: true
+
+---
+# spring production profile configuration
+spring:
+   profiles: prod
+
+---
+# server
+server:
+   port: 8080
+   servlet:
+      context-path: /
+    
+# mybatis
+mybatis:
+   config-location: classpath:mybatis/configuration.xml
