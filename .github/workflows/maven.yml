@@ -30,6 +30,6 @@ jobs:
       run: ls -a
       
     - name: Step 5 - What is in the target folder
-      run:
+      run: |
         cd target
-        ls -la
+        ls -a
