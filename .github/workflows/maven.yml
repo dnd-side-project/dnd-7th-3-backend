@@ -1,0 +1,35 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Spring Boot & Maven CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # 실행 환경 지정
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Step 1 - Checkout main branch from Github
+    - uses: actions/checkout@v3
+    
+    - name: Step 2 - Set up JDK 1.8
+      uses: actions/setup-java@v3
+      with:
+        java-version: 1.8
+        
+    - name: Step 3 - Build with Maven
+      run: mvn -B package --file pom.xml
+      
+    - name: Step 4 - List the current directory
+      run: ls -a
+      
+    - name: Step 5 - What is in the target folder
+      run:
+        cd target
+        ls -a
