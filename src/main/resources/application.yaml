@@ -17,16 +17,17 @@ spring:
 spring:
    profiles: dev
    datasource:
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: org.mariadb.jdbc.Driver
       url: ${db.url}
       username: ${db.username}
       password: ${db.password} 
    jpa:
+      database-platform: org.hibernate.dialect.MariaDBDialect
       hibernate:
          ddl-auto: create #create update none
+         show-sql: true
          naming:
             physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-         show-sql: true
 
 ---
 # spring production profile configuration
