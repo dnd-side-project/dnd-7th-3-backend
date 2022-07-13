@@ -12,9 +12,12 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
-	
+
+    private static final String API_TITLE = "Mount-Clim";
+    private static final String API_DESCRIPTION = "Mount-Clim API Docs";
+    private static final String API_VERSION = "0.0.1";
+
 	@Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -29,8 +32,9 @@ public class SwaggerConfig {
 	
 	private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Mount Clim api info")
-                .description("Mount Clim API")
+                .title(API_TITLE)
+                .description(API_DESCRIPTION)
+                .version(API_VERSION)
                 .build();
     }
 }
