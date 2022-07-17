@@ -24,14 +24,10 @@ spring:
    jpa:
       database-platform: org.hibernate.dialect.MariaDBDialect
       hibernate:
-         ddl-auto: update #create update none
+         ddl-auto: create #create update none
          show-sql: true
          naming:
             physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      properties:
-         hibernate:
-            format_sql: true
-            highlight_sql: true
 
 ---
 # spring production profile configuration
