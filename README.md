@@ -14,5 +14,6 @@
 * Spring Boot (v2.7.1)
 * Spring Data JPA
 * Querydsl
+* Redis
 * Lombok
 * MariaDB
