@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="test">
-	<select id="getTest" parameterType="hashmap" resultType="com.dnd.mountclim.domain.user.model.Test">
+	<select id="getTest" parameterType="hashmap" resultType="com.dnd.mountclim.domain.user.vo.TestVo">
 		select 
 			id,
 			name 

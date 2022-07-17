@@ -1,4 +1,4 @@
-package com.dnd.mountclim.domain.user.model;
+package com.dnd.mountclim.domain.user.entity;
 
 import java.sql.Timestamp;
 
@@ -15,13 +15,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="user")
+@Table(name="member")
 @Data
 @NoArgsConstructor // 파라미터가 없는 기본 생성자를 생성
-public class User {
+public class MemberEntity {
 	
 	@Builder
-	public User(int id, String username, String password, String email, String role, String provider, String providerId,
+	public MemberEntity(int id, String username, String password, String email, String role, String provider, String providerId,
 			Timestamp loginDate, Timestamp createDate) {
 		this.username = username;
 		this.password = password;

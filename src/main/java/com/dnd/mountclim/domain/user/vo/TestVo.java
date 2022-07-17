@@ -1,6 +1,6 @@
-package com.dnd.mountclim.domain.user.model;
+package com.dnd.mountclim.domain.user.vo;
 
-public class Test {
+public class TestVo {
 
 	private int id;
 	private String name;

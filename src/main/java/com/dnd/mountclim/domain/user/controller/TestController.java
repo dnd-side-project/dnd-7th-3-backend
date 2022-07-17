@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dnd.mountclim.domain.user.model.Test;
 import com.dnd.mountclim.domain.user.service.TestService;
+import com.dnd.mountclim.domain.user.vo.TestVo;
 
 @RestController
 @RequestMapping("/api/test")
@@ -17,7 +17,7 @@ public class TestController {
 	
 	@GetMapping("/get_test")
 	public String get_test() {
-		Test test = testService.getTest();
+		TestVo test = testService.getTest();
 		return "<h1>" + test.getId() + ". " + test.getName() + "</h1>";
 	}
 }

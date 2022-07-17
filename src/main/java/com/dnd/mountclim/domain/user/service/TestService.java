@@ -3,8 +3,8 @@ package com.dnd.mountclim.domain.user.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dnd.mountclim.domain.user.model.Test;
 import com.dnd.mountclim.domain.user.repository.TestRepository;
+import com.dnd.mountclim.domain.user.vo.TestVo;
 
 @Service
 public class TestService {
@@ -12,7 +12,7 @@ public class TestService {
 	@Autowired
 	private TestRepository testRepository;
 	
-	public Test getTest() {
+	public TestVo getTest() {
 		return testRepository.getTest();
 	}
 }
