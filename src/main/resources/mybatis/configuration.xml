@@ -14,8 +14,4 @@
     <typeHandlers>
     	<typeHandler handler="org.apache.ibatis.type.BlobTypeHandler" jdbcType="BLOB" javaType="byte[]"/>
     </typeHandlers>
-    
-    <mappers>
-    	<mapper resource="mybatis/mapper/test.xml"/>
-    </mappers>
 </configuration>

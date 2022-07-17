@@ -17,21 +17,17 @@ spring:
 spring:
    profiles: dev
    datasource:
-      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      driver-class-name: org.mariadb.jdbc.Driver
       url: ${db.url}
       username: ${db.username}
       password: ${db.password} 
    jpa:
       database-platform: org.hibernate.dialect.MariaDBDialect
       hibernate:
-         ddl-auto: update #create update none
+         ddl-auto: create #create update none
          show-sql: true
          naming:
             physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      properties:
-         hibernate:
-            format_sql: true
-            highlight_sql: true
 
 ---
 # spring production profile configuration
@@ -48,27 +44,3 @@ server:
 # mybatis
 mybatis:
    config-location: classpath:mybatis/configuration.xml
-   
-# logging
-logging:
-  level:
-    com:
-      zaxxer:
-        hikari: INFO
-    javax:
-      sql:
-        DataSource: OFF
-    jdbc:
-      audit: OFF
-      resultset: OFF
-      resultsettable: OFF    #SQL 결과 데이터 Table을 로그로 남긴다.
-      sqlonly: OFF           #SQL만 로그로 남긴다.
-      sqltiming: INFO        #SQL과 소요시간을 표기한다.
-      connection : OFF       #커넥션 확인가능
-    org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
