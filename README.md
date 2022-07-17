@@ -11,9 +11,11 @@
 
 # 개발 환경
 * Java 8
+* Maven
 * Spring Boot (v2.7.1)
 * Spring Data JPA
 * Querydsl
 * Redis
 * Lombok
 * MariaDB
+* ...
