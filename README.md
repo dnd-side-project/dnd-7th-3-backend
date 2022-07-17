@@ -14,8 +14,12 @@
 * Maven
 * Spring Boot (v2.7.1)
 * Spring Data JPA
+* Spring Security
+* JWT
 * Querydsl
 * Redis
 * Lombok
 * MariaDB
-* ...
+* jUnit
+* github actions
+* aws ec2, s3
