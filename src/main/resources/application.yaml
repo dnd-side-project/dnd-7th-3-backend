@@ -19,14 +19,14 @@ spring:
    datasource:
 #      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
       driver-class-name: org.mariadb.jdbc.Driver     
-      url: jdbc:mariadb://dnd-7th-3-dev-db.cyg9f5c63bay.ap-northeast-2.rds.amazonaws.com:3306/dnd_7th_3_dev_db
-      username: root
-      password: qwer1234!
+      url: ${db.url}
+      username: ${db.username}
+      password: ${db.password} 
    jpa:
       database-platform: org.hibernate.dialect.MariaDBDialect
       hibernate:
          ddl-auto: create #create update none
-#         show-sql: true
+         show-sql: true
          naming:
             physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       properties:
