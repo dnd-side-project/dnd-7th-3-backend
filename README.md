@@ -12,7 +12,7 @@
 # 개발 환경
 * Java 8
 * Maven
-* Spring Boot (v2.7.1)
+* Spring Boot (v2.5.6)
 * Spring Data JPA
 * Spring Security
 * JWT
