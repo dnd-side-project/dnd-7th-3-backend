@@ -47,7 +47,8 @@ server:
     
 # mybatis
 mybatis:
-   config-location: classpath:mybatis/configuration.xml
+#   config-location: classpath:mybatis/mybatis-config.xml
+   mapper-locations: mappers/*Mapper.xml
    
 # logging
 logging:
