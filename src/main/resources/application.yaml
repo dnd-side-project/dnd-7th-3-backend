@@ -17,7 +17,8 @@ spring:
 spring:
    profiles: dev
    datasource:
-      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      driver-class-name: org.mariadb.jdbc.Driver     
       url: ${db.url}
       username: ${db.username}
       password: ${db.password} 
@@ -47,7 +48,7 @@ server:
     
 # mybatis
 mybatis:
-#   config-location: classpath:mybatis/mybatis-config.xml
+   config-location: classpath:mybatis/mybatis-config.xml
    mapper-locations: mappers/*Mapper.xml
    
 # logging

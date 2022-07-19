@@ -12,7 +12,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = {"com.dnd.host.mountclim.domain.mapper"}
+@MapperScan(basePackages = {"com.dnd.mountclim.domain.mapper"}
         ,sqlSessionFactoryRef="sqlSessionFactory"
         ,sqlSessionTemplateRef="sqlSessionTemplate")
 public class MybatisConfig {
