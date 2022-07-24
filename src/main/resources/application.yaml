@@ -25,7 +25,7 @@ spring:
    jpa:
       database-platform: org.hibernate.dialect.MariaDBDialect
       hibernate:
-         ddl-auto: create #create update none
+         ddl-auto: create-drop #create update none
          show-sql: true
          naming:
             physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -36,6 +36,16 @@ spring:
    redis:
       host: ${redis.host}
       port: ${redis.port}
+   security:
+      oauth2:
+         client:
+            registration:
+               google:
+                  client-id: ${google.client.id}
+                  client-secret: ${google.client.secret}
+                  scope:
+                  - email
+                  - profile
 
 ---
 # spring production profile configuration
