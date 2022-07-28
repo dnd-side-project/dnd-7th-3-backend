@@ -25,7 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	private final JwtTokenProvider jwtTokenProvider;
-	private final AuthenticationManager authenticationManager;	
+	private final AuthenticationManager authenticationManager;
+	
 	private static Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 	
 	@Override
@@ -64,7 +65,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		logger.info("JwtAuthenticationFilter successfulAuthentication : 진입");	
 		PrincipalDetails principalDetailis = (PrincipalDetails) authResult.getPrincipal();
 		String accessToken = jwtTokenProvider.accessCreateToken(principalDetailis);
-		logger.info("JwtAuthenticationFilter 토큰생성완료 :" + accessToken);
+		String refressToken = jwtTokenProvider.refreshCreateToken(principalDetailis);
+		
+		logger.info("JwtAuthenticationFilter 토큰생성완료 :");
+		logger.info("[ ACCESS_TOKEN ] " + accessToken);
+		logger.info("[ REFRESS_TOKEN ] " + refressToken);
 		response.addHeader("Authorization", "Bearer " + accessToken);
 	}
 }
