@@ -33,15 +33,19 @@ public class PrincipalOAuth2SuccessHandler extends SimpleUrlAuthenticationSucces
 		PrincipalDetails principalDetailis = (PrincipalDetails) authentication.getPrincipal();
 		
 		String accessToken = jwtTokenProvider.accessCreateToken(principalDetailis);
+		String refreshToken = jwtTokenProvider.refreshCreateToken(principalDetailis);
+		
+		logger.info("[ OAuth ACCESSTOKEN ] : " + accessToken);
+		logger.info("[ OAuth REFRESHTOKEN ] : " + refreshToken);
 		
 		/*
 		 * 프론트엔드 ouath 로그인 요청 시 redirect url 지정
-		 * redirect 경우, header에 값을 추가할 수 없다.
 		 */
 		String targetUrl = UriComponentsBuilder.fromUriString("/home")
 				.queryParam("access_token", accessToken)
 				.build().toUriString();
-
+		
+		response.addHeader("Authorization", "Bearer " + accessToken);
 		getRedirectStrategy().sendRedirect(request, response, targetUrl);
 	}
 }
