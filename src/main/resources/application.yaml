@@ -8,10 +8,12 @@ spring:
 spring:
    http:
       encoding:
-         charset: UTF-8
-         enabled: true
+        enabled: true
          force: true
-
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
 ---
 # spring dev profile configuration
 spring:
