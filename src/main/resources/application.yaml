@@ -24,7 +24,7 @@ spring:
    jpa:
       database-platform: org.hibernate.dialect.MariaDBDialect
       hibernate:
-         ddl-auto: create #create update none
+         ddl-auto: validate #create update none
          show-sql: true
          naming:
             physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

@@ -1,10 +1,9 @@
 package com.dnd.mountclim.domain.controller;
 
 
+import com.dnd.mountclim.domain.dto.UserDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.dnd.mountclim.domain.service.UserService;
 
@@ -18,8 +17,18 @@ public class UserController {
 
 	private final UserService userService;
 
-	@GetMapping
+	@GetMapping("/mybatis")
 	public ResponseEntity<?> getUser() {
 		return userService.getUser();
+	}
+
+	@GetMapping("/jpa")
+	public ResponseEntity<?> getUser2() {
+		return userService.getUser2();
+	}
+
+	@PostMapping
+	public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) {
+		return userService.save(userDto);
 	}
 }
