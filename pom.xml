@@ -14,30 +14,10 @@
 	</parent>
 
 	<dependencies>
-		<!-- oauth -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.auth0</groupId>
-			<artifactId>java-jwt</artifactId>
-			<version>3.10.2</version>
-		</dependency>
 		<!-- spring data jpa -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<!-- spring data redis -->
-		<dependency>    
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
-		<!-- spring security -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<!-- spring web -->
 		<dependency>
@@ -103,11 +83,6 @@
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
