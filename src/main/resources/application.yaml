@@ -9,11 +9,8 @@ spring:
    http:
       encoding:
         enabled: true
-         force: true
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
+        force: true
+
 ---
 # spring dev profile configuration
 spring:
@@ -35,19 +32,6 @@ spring:
          hibernate:
             format_sql: true
             highlight_sql: true
-   redis:
-      host: ${redis.host}
-      port: ${redis.port}
-   security:
-      oauth2:
-         client:
-            registration:
-               google:
-                  client-id: ${google.client.id}
-                  client-secret: ${google.client.secret}
-                  scope:
-                  - email
-                  - profile
 
 ---
 # spring production profile configuration
@@ -59,6 +43,8 @@ spring:
 server:
    port: 8080
    servlet:
+      encoding:
+         charset: UTF-8
       context-path: /
     
 # mybatis
