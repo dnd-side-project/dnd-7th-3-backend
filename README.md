@@ -4,6 +4,7 @@
 * **[Architecture](#Architecture)**
 * **[개발 환경](#개발-환경)**
 * **[코딩 컨벤션](#코딩-컨벤션)**
+* **[코드 포맷팅](#코드-포맷팅)**
 * **[Git 컨벤션과 브랜치 전략](#Git-컨벤션과-브랜치-전략)**
 
 <br><hr><br>
@@ -56,6 +57,11 @@
 if(status.isNormal()) (O) / if(!status.isAbnormal()) (X)
 ```
 
+# 코드 포맷팅
+`Google Java Style`
+- tab size : 2
+- indent : 2
+
 # Git 컨벤션과 브랜치 전략
 ## 브랜치 이름
 `브랜치타입/이슈ID`
@@ -85,6 +91,7 @@ type: 내용
 - `chore`: 빌드 업무 수정, 의존성 파일 수정
 
 ## 참고
+https://velog.io/@injoon2019/IntelliJ%EC%97%90-Google-Java-Style-Guide-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0   
 https://jobc.tistory.com/212    
 https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716    
 https://doublesprogramming.tistory.com/256    
