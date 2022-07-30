@@ -5,9 +5,9 @@
 <div align="center">
 <table>
   <tr>
-      <td align="center"><a href="https://github.com/anjeongkyun"><img src="./images/anjeongkyun.jpeg" width="150x;" alt=""/><br /><p><b>안정균</b></p></a><small>⚛️ Back-End Developer</small></td>
-    <td align="center"><a href="https://github.com/haeyonghahn"><img src="./images/haeyonghahn.jpeg" width="150x;" alt=""/><br /><p><b>한해용</b></p></a><small>⚛️ Back-End Developer</small></td>
-    <td align="center"><a href="https://github.com/Amenable-C"><img src="./images/Amenable-C.jpeg" width="150px;" alt=""/><br /><p><b>최연재</b></p></a><small>⚛️ Back-End Developer</small></td>
+      <td align="center"><a href="https://github.com/anjeongkyun"><img src="./images/anjeongkyun.jpeg" width="150x;" alt=""/><br /><p><b>안정균</b></p></a><small>🍀 Back-End Developer</small></td>
+    <td align="center"><a href="https://github.com/haeyonghahn"><img src="./images/haeyonghahn.jpeg" width="150x;" alt=""/><br /><p><b>한해용</b></p></a><small>🍀 Back-End Developer</small></td>
+    <td align="center"><a href="https://github.com/Amenable-C"><img src="./images/Amenable-C.jpeg" width="150px;" alt=""/><br /><p><b>최연재</b></p></a><small>🍀 Back-End Developer</small></td>
   </tr> 
 </table>
 </div>
