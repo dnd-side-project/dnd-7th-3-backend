@@ -38,10 +38,17 @@
 ![gitflow](https://github.com/dnd-side-project/dnd-7th-3-backend/blob/develop/gitflow.PNG)
 
 ## 커밋 메시지
-- `feat`: 사용자를 위한 새로운 기능
-- `fix`: 빌드 스크립트에 대한 수정이 아닌 사용자를 위한 버그 수정
-- `docs`: 문서에 대한 변경 사항
-- `style`: 형식 지정, 세미콜론 누락 등
-- `refactor`: 코드 리팩토링, 예를 들어 변수 이름 바꾸기
-- `test`: 누락된 테스트 추가, 테스트 리팩토링
-- `chore`: 그런트 작업 업데이트 등
+```
+type: 내용
+^--^  ^---^
+|     |
+|
++-------> Type: chore, docs, feat, fix, refactor, style, or test.
+```
+- `feat`: 새로운 기능 추가
+- `fix`: 버그 수정
+- `docs`: 문서 수정
+- `style`: 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우
+- `refactor`: 코드 리팩토링
+- `test`: 테스트 코드, 리펙토링 테스트 코드 추가
+- `chore`: 빌드 업무 수정, 의존성 파일 수정
