@@ -28,6 +28,33 @@
 
 # 코딩 컨벤션
 ## Naming
+1. 변수는 CamelCase를 기본으로 한다.
+- `userEmail`, `userCellPhone` ...
+2. URL, 파일명 등은 kebab-case를 사용한다.
+- `/user-email-page` ...
+3. 패키지명은 단어가 달라지더라도 무조건 소문자를 사용한다.
+- `frontend`, `useremail` ...
+4. ENUM이나 상수는 대문자로 네이밍한다.
+- `NORMAL_STATUS` ...
+5. 함수명은 소문자로 시작하고 동사로 네이밍한다.
+- `getUserId()`, `isNormal()` ...
+6. 클래스명은 명사로 작성하고 UpperCamelCase를 사용한다.
+- `UserEmail`, `Address` ...
+7. 컬렉션은 복수형을 사용하거나 컬렉션을 명시해준다.
+- `List ids`, `Map<User, Int> userToIdMap` ...
+## Structure
+1. 패키지는 목적별로 묶는다.
+- `domain(domain 관련 패키지)`, `common(공통 관련 패키지)`
+2. 하나의 메소드와 클래스는 하나의 목적을 두게 만든다.
+- 하나의 메소드 안에서 한가지 일만 해야한다.
+- 하나의 클래스 안에서는 같은 목적을 둔 코드들의 집합이여야한다.
+## Programming
+1. 반복되는 코드를 작성하지 않는다.
+2. 변수는 최대한 사용하는 위치에 가깝게 사용한다.
+3. 조건문에 부정조건을 넣는 것을 피한다.
+```java
+if(status.isNormal()) (O) / if(!status.isAbnormal()) (X)
+```
 
 # Git 컨벤션과 브랜치 전략
 ## 브랜치 이름
