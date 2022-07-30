@@ -3,6 +3,7 @@
 ## 목차
 * **[Architecture](#Architecture)**
 * **[개발 환경](#개발-환경)**
+* **[Git 컨벤션과 브랜치 전략](#Git-컨벤션과-브랜치-전략)**
 
 <br><hr><br>
 
@@ -23,3 +24,6 @@
 * jUnit
 * github actions
 * aws ec2, s3
+
+# Git 컨벤션과 브랜치 전략
+
