@@ -17,6 +17,7 @@
 * Maven
 * Spring Boot (v2.5.6)
 * Spring Data JPA
+* Spring Data Redis
 * Spring Security
 * JWT
 * Querydsl
