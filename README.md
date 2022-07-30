@@ -85,6 +85,7 @@ type: 내용
 - `chore`: 빌드 업무 수정, 의존성 파일 수정
 
 ## 참고
+https://jobc.tistory.com/212    
 https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716    
 https://doublesprogramming.tistory.com/256    
 https://www.conventionalcommits.org/ko/v1.0.0/
