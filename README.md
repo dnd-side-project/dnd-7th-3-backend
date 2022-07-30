@@ -3,6 +3,7 @@
 ## 목차
 * **[Architecture](#Architecture)**
 * **[개발 환경](#개발-환경)**
+* **[코딩 컨벤션](#코딩-컨벤션)**
 * **[Git 컨벤션과 브랜치 전략](#Git-컨벤션과-브랜치-전략)**
 
 <br><hr><br>
@@ -24,6 +25,9 @@
 * jUnit
 * github actions
 * aws ec2, s3
+
+# 코딩 컨벤션
+## Naming
 
 # Git 컨벤션과 브랜치 전략
 ## 브랜치 이름
@@ -52,3 +56,8 @@ type: 내용
 - `refactor`: 코드 리팩토링
 - `test`: 테스트 코드, 리펙토링 테스트 코드 추가
 - `chore`: 빌드 업무 수정, 의존성 파일 수정
+
+## 참고
+https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716    
+https://doublesprogramming.tistory.com/256    
+https://www.conventionalcommits.org/ko/v1.0.0/
