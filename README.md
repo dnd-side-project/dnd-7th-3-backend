@@ -1,6 +1,8 @@
 # dnd-7th-3-backend
 
 ## 💻 Developer
+
+<div align="center">
 <table>
   <tr>
       <td align="center"><a href="https://github.com/anjeongkyun"><img src="./images/anjeongkyun.jpeg" width="150x;" alt=""/><br /><p><b>안정균</b></p></a><small>⚛️ Back-End Developer</small></td>
@@ -8,7 +10,7 @@
     <td align="center"><a href="https://github.com/Amenable-C"><img src="./images/Amenable-C.jpeg" width="150px;" alt=""/><br /><p><b>최연재</b></p></a><small>⚛️ Back-End Developer</small></td>
   </tr> 
 </table>
-
+</div>
 <br><hr><br>
 
 ## 목차
@@ -28,12 +30,8 @@
 * Maven
 * Spring Boot (v2.5.6)
 * Spring Data JPA
-* Spring Data Redis
 * Spring Security
-* JWT
 * Querydsl
-* Redis
-* Lombok
 * MariaDB
 * jUnit
 * github actions
@@ -70,14 +68,13 @@ if(status.isNormal()) (O) / if(!status.isAbnormal()) (X)
 ```
 
 # 코드 포맷팅
-`Google Java Style`
-- tab size : 2
-- indent : 2
+- tab size : 4
+- indent : 4
 
 # Git 컨벤션과 브랜치 전략
 ## 브랜치 이름
 `브랜치타입/이슈ID`
-- 브랜치를 생성하고나서 PR 이후 merge된 브랜치는 삭제하자.
+- 브랜치를 생성하고나서 PR 이후 merge된 브랜치는 삭제한다.
 ## 브랜치 타입과 전략
 - `main` : 배포 가능한 상태만을 관리
 - `develop` : 해당 브랜치를 기반으로 개발을 진행하며 모든 기능이 추가되고 버그가 수정되어 배포 가능한 상태라면 'master' 브랜치에 merge
