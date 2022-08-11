@@ -39,7 +39,9 @@ public class KaKaoResponseDto {
 		@ApiModelProperty(value = "Y 좌표 혹은 위도(latitude)", example = "37.53401162895581")
 		public String y;
 		@ApiModelProperty(value = "결과 페이지 번호", example = "1~45 사이의 값 (기본값: 1)")
-		public int page;
+		public String discuss;
+		@ApiModelProperty(value = "결과 페이지 번호", example = "1~45 사이의 값 (기본값: 1)")
+		public String review;
 	}
 	@Data 
 	public static class Meta {
