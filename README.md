@@ -23,7 +23,7 @@
 <br><hr><br>
 
 # Architecture
-![image](https://github.com/dnd-side-project/dnd-7th-3-backend/blob/develop/architecture.PNG)
+![image](https://github.com/dnd-side-project/dnd-7th-3-backend/blob/develop/images/architecture.PNG)
 
 # 개발 환경
 * Java 8
@@ -80,7 +80,7 @@ if(status.isNormal()) (O) / if(!status.isAbnormal()) (X)
 - `feature` : 새로운 기능 개발 및 버그 수정이 필요할 때마다 'develop' 브랜치로부터 분기
 - `hotfix` : 배포한 버전에 긴급하게 수정을 해야 할 필요가 있을 경우, 'main' 브랜치에서 분기하는 브랜치
 
-![gitflow](https://github.com/dnd-side-project/dnd-7th-3-backend/blob/develop/gitflow.PNG)
+![gitflow](https://github.com/dnd-side-project/dnd-7th-3-backend/blob/develop/images/gitflow.PNG)
 
 ## 커밋 메시지
 ```
