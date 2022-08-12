@@ -8,12 +8,14 @@ import lombok.Data;
 
 @Data
 @ApiModel(value = "카카오 API 정보", description = "주소, 전화번호, 위도, 경도 등 등을 가진 Dto Class")
-public class KaKaoResponseDto {
+public class KakaoResponseDto {
 	public List<Document> documents;
 	public Meta meta;
 	
 	@Data
 	public static class Document {
+		public List<Menu> menus;
+		
 		@ApiModelProperty(value = "전체 지번 주소", example = "서울 용산구 이태원동 127-28")
 		public String address_name;
 		@ApiModelProperty(value = "중요 카테고리만 그룹핑한 카테고리 그룹 코드", example = "FD6")
@@ -39,9 +41,19 @@ public class KaKaoResponseDto {
 		@ApiModelProperty(value = "Y 좌표 혹은 위도(latitude)", example = "37.53401162895581")
 		public String y;
 		@ApiModelProperty(value = "결과 페이지 번호", example = "1~45 사이의 값 (기본값: 1)")
-		public String discuss;
+		public Integer discuss;
 		@ApiModelProperty(value = "결과 페이지 번호", example = "1~45 사이의 값 (기본값: 1)")
-		public String review;
+		public Integer review;
+		@ApiModelProperty(value = "이미지 url", example = "1~45 사이의 값 (기본값: 1)")
+		public List<String> img_url;
+		
+		@Data
+		public static class Menu {
+			@ApiModelProperty(value = "메뉴명", example = "프랭크버거R")
+			public String menu_name;
+			@ApiModelProperty(value = "메뉴 가격", example = "3,900")
+			public String menu_price;
+		}
 	}
 	@Data 
 	public static class Meta {
