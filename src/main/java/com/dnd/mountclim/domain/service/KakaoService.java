@@ -92,8 +92,14 @@ public class KakaoService {
 			// 제일 많은 리뷰 순서대로 줄 세우고 round 갯수만큼 뽑아내기
 			List<Document> orderByDocument = new ArrayList<>();
 			if(newDocuments.size() > 0) {
+				int max = 0;
+				if(newDocuments.size() >= Integer.parseInt(round)) {
+					max = Integer.parseInt(round);
+				} else {
+					max = newDocuments.size();
+				}
 				newDocuments = newDocuments.stream().filter(x -> x.review != null).sorted(Comparator.comparing(Document::getReview).reversed()).collect(Collectors.toList());
-				for(int i = 0; i < Integer.parseInt(round); i++) {
+				for(int i = 0; i < max; i++) {
 					orderByDocument.add(newDocuments.get(i));
 				}
 			}
