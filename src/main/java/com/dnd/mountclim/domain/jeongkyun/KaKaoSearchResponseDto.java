@@ -1,6 +1,5 @@
 package com.dnd.mountclim.domain.jeongkyun;
 
-import com.dnd.mountclim.domain.dto.KaKaoResponseDto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -11,11 +10,42 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class KaKaoSearchResponseDto {
-    public List<KaKaoResponseDto.Document> documents;
-    public KaKaoResponseDto.Meta meta;
+    public KaKaoSearchResponseDto.Meta meta;
+    public List<KaKaoSearchResponseDto.Document> documents;
 
     @Builder
     @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    public static class Meta {
+        @ApiModelProperty(value = "검색어에 검색된 문서 수", example = "0")
+        public Integer total_count;
+        @ApiModelProperty(value = "total_count 중 노출 가능 문서 수 (최대: 45)", example = "0")
+        public Integer pageable_count;
+        @ApiModelProperty(value = "현재 페이지가 마지막 페이지인지 여부. 값이 false면 다음 요청 시 page 값을 증가시켜 다음 페이지 요청 가능", example = "false")
+        public Boolean is_end;
+        @ApiModelProperty(value = "질의어의 지역 및 키워드 분석 정보")
+        public List<KaKaoSearchResponseDto.SameName> same_name;
+
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    public static class SameName {
+        @ApiModelProperty(value = "질의어에서 인식된 지역의 리스트", example = "'중앙로 맛집' 에서 중앙로에 해당하는 지역 리스트")
+        public String[] region;
+        @ApiModelProperty(value = "질의어에서 지역 정보를 제외한 키워드", example = "'중앙로 맛집' 에서 '맛집'")
+        public String keyword;
+        @ApiModelProperty(value = "인식된 지역 리스트 중, 현재 검색에 사용된 지역 정보")
+        public String selected_region;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
     public static class Document {
         @ApiModelProperty(value = "전체 지번 주소", example = "서울 용산구 이태원동 127-28")
         public String address_name;
@@ -43,30 +73,5 @@ public class KaKaoSearchResponseDto {
         public String y;
         @ApiModelProperty(value = "결과 페이지 번호", example = "1~45 사이의 값 (기본값: 1)")
         public int page;
-    }
-
-    @Builder
-    @Getter
-    public static class Meta {
-        @ApiModelProperty(value = "검색어에 검색된 문서 수", example = "0")
-        public Integer total_count;
-        @ApiModelProperty(value = "total_count 중 노출 가능 문서 수 (최대: 45)", example = "0")
-        public Integer pageable_count;
-        @ApiModelProperty(value = "현재 페이지가 마지막 페이지인지 여부. 값이 false면 다음 요청 시 page 값을 증가시켜 다음 페이지 요청 가능", example = "false")
-        public Boolean is_end;
-        @ApiModelProperty(value = "질의어의 지역 및 키워드 분석 정보")
-        public List<KaKaoResponseDto.Meta.SameName> same_name;
-
-    }
-
-    @Builder
-    @Getter
-    public static class SameName {
-        @ApiModelProperty(value = "질의어에서 인식된 지역의 리스트", example = "'중앙로 맛집' 에서 중앙로에 해당하는 지역 리스트")
-        public String[] region;
-        @ApiModelProperty(value = "질의어에서 지역 정보를 제외한 키워드", example = "'중앙로 맛집' 에서 '맛집'")
-        public String keyword;
-        @ApiModelProperty(value = "인식된 지역 리스트 중, 현재 검색에 사용된 지역 정보")
-        public String selected_region;
     }
 }
