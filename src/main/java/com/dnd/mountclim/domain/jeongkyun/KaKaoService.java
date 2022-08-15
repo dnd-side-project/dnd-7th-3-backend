@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class KaKaoService {
 
-    private final String KAKAO_APIKEY;
+    private final String KAKAO_APIKEY = "";
     private final String category_group_code = "FD6";
 
     public ResponseEntity<?> categorySearch(
