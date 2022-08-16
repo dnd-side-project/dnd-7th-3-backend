@@ -1,18 +1,23 @@
 package com.dnd.mountclim.domain.jeongkyun;
 
-import com.dnd.mountclim.domain.dto.KaKaoResponseDto;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-
 import java.util.List;
+
+import com.dnd.mountclim.domain.dto.KakaoResponseDto;
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class KaKaoSearchResponseDto {
-    public List<KaKaoResponseDto.Document> documents;
-    public KaKaoResponseDto.Meta meta;
+    public List<KakaoResponseDto.Document> documents;
+    public KakaoResponseDto.Meta meta;
 
     @Builder
     @Getter
@@ -55,7 +60,7 @@ public class KaKaoSearchResponseDto {
         @ApiModelProperty(value = "현재 페이지가 마지막 페이지인지 여부. 값이 false면 다음 요청 시 page 값을 증가시켜 다음 페이지 요청 가능", example = "false")
         public Boolean is_end;
         @ApiModelProperty(value = "질의어의 지역 및 키워드 분석 정보")
-        public List<KaKaoResponseDto.Meta.SameName> same_name;
+        public List<KakaoResponseDto.Meta.SameName> same_name;
 
     }
 

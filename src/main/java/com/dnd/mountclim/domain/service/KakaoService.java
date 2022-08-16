@@ -33,7 +33,7 @@ public class KakaoService {
 
 	private final int INDEX_NOT_FOUND = -1;
 	private final String WEB_DRIVER_ID = "webdriver.chrome.driver"; 															// 드라이버 ID
-	private final String WEB_DRIVER_PATH = Paths.get(AppConfig.getOsPath("dnd"), new String[]{"chromedriver.exe"}).toString();  // 드라이버 경로
+	private final String WEB_DRIVER_PATH = Paths.get(AppConfig.getOsPath("dnd"), new String[]{AppConfig.getChromePath()}).toString();  // 드라이버 경로
 	
 	@Value("${kakao.api.key}")
 	private String KAKAO_APIKEY;	
@@ -45,15 +45,6 @@ public class KakaoService {
 	WebDriverWait webDriverWait = null;
 	JavascriptExecutor executor = null;
 
-	public KakaoService() {
-		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
-		ChromeOptions options = new ChromeOptions();
-		options.setHeadless(true);
-		driver = new ChromeDriver(options);
-		executor = (JavascriptExecutor) driver;
-		webDriverWait = new WebDriverWait(driver, 10);
-	}
-	
 	public ResponseEntity<KakaoResponseDto> kakaoApi(
 		String food,
 		String latitude,
@@ -92,13 +83,13 @@ public class KakaoService {
 			// 제일 많은 리뷰 순서대로 줄 세우고 round 갯수만큼 뽑아내기
 			List<Document> orderByDocument = new ArrayList<>();
 			if(newDocuments.size() > 0) {
+				newDocuments = newDocuments.stream().filter(x -> x.review != null).sorted(Comparator.comparing(Document::getReview).reversed()).collect(Collectors.toList());					
 				int max = 0;
 				if(newDocuments.size() >= Integer.parseInt(round)) {
 					max = Integer.parseInt(round);
 				} else {
 					max = newDocuments.size();
 				}
-				newDocuments = newDocuments.stream().filter(x -> x.review != null).sorted(Comparator.comparing(Document::getReview).reversed()).collect(Collectors.toList());
 				for(int i = 0; i < max; i++) {
 					orderByDocument.add(newDocuments.get(i));
 				}
@@ -114,12 +105,16 @@ public class KakaoService {
 	public void foodClassification(KakaoResponseDto kakaoResponseDto, String food) throws Exception {
 		List<Document> documents = kakaoResponseDto.documents;
 		try {
+			int index = 0;
 			for(Document document : documents) {
 				String category_name = document.category_name.replace(" ", "").split(">")[1];
 				
 				if(category_name.equals(food)) {
 					newDocuments.add(document);
 					placeUrlCrawling(document);
+				}
+				if(index == 0) {
+					break;
 				}
 			}
 		} catch(Exception e) {
@@ -128,9 +123,20 @@ public class KakaoService {
 	}
 	
 	public void placeUrlCrawling(Document document) {
+		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("headless");
+		options.addArguments("window-size=1920x1080");
+		options.addArguments("disable-gpu");
+		options.addArguments("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
+		options.addArguments("lang=ko_KR");
+		driver = new ChromeDriver(options);
+		executor = (JavascriptExecutor) driver;
+		webDriverWait = new WebDriverWait(driver, 10);
+		
 		driver.get(document.place_url);
 		WebElement kakaoWrap = driver.findElement(By.id("kakaoWrap"));
-		executor.executeScript("arguments[0].click();", kakaoWrap);	
+//		executor.executeScript("arguments[0].click();", kakaoWrap);	
 		webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("link_evaluation")));
 		
 		// ****** 리뷰 및 후기 갯수 가져오기 ******
@@ -186,6 +192,7 @@ public class KakaoService {
 		}
 		document.setImg_url(photoList);		
 		//*****************************
+		driver.close();
 	}
 	
 	public String substringBetween(String str, String open, String close) {		
