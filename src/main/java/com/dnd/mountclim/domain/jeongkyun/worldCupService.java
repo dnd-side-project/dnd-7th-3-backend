@@ -1,5 +1,6 @@
 package com.dnd.mountclim.domain.jeongkyun;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -10,7 +11,9 @@ import java.util.List;
 @Service
 public class worldCupService {
 
-    private final String KAKAO_APIKEY = "";
+    @Value("${kakao.api.key}")
+    private String KAKAO_APIKEY;
+
     private final String category_group_code = "FD6"; //음식점
     private RestTemplate restTemplate;
     private HttpHeaders httpHeaders;
@@ -70,9 +73,10 @@ public class worldCupService {
             worldCupDtoList.add(
                     WorldCupDto
                             .builder()
-                            .placeName(documents.get(i).getPlace_name())
+                            .placeName(documents.get(i).getPlaceName())
                             .distance(documents.get(i).getDistance())
                             .phone(documents.get(i).getPhone())
+                            .addressName(documents.get(i).getAddressName())
                             .build()
             );
         }

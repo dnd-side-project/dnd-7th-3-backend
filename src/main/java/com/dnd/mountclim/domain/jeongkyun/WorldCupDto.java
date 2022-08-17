@@ -14,6 +14,7 @@ public class WorldCupDto {
     private String placeName;
     private String distance;
     private String phone;
+    private String addressName;
 
     //크롤링 필요 (이미지, 메뉴,리뷰, 별점)
     private String[] placeImg;

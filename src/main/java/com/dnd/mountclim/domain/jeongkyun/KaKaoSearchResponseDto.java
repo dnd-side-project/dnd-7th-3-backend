@@ -1,5 +1,6 @@
 package com.dnd.mountclim.domain.jeongkyun;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -48,13 +49,17 @@ public class KaKaoSearchResponseDto {
     @AllArgsConstructor
     public static class Document {
         @ApiModelProperty(value = "전체 지번 주소", example = "서울 용산구 이태원동 127-28")
-        public String address_name;
+        @JsonProperty("address_name")
+        public String addressName;
         @ApiModelProperty(value = "중요 카테고리만 그룹핑한 카테고리 그룹 코드", example = "FD6")
-        public String category_group_code;
+        @JsonProperty("category_group_code")
+        public String categoryGroupCode;
         @ApiModelProperty(value = "중요 카테고리만 그룹핑한 카테고리 그룹명", example = "음식점")
-        public String category_group_name;
+        @JsonProperty("category_group_name")
+        public String categoryGroupName;
         @ApiModelProperty(value = "카테고리 이름", example = "음식점 > 한식 > 육류,고기")
-        public String category_name;
+        @JsonProperty("category_name")
+        public String categoryName;
         @ApiModelProperty(value = "중심좌표까지의 거리 (단, x,y 파라미터를 준 경우에만 존재) (단위: 미터(m))", example = "842")
         public String distance;
         @ApiModelProperty(value = "장소 ID", example = "1376253571")
@@ -62,11 +67,14 @@ public class KaKaoSearchResponseDto {
         @ApiModelProperty(value = "전화번호", example = "02-793-2268")
         public String phone;
         @ApiModelProperty(value = "장소명, 업체명", example = "로우앤슬로우")
-        public String place_name;
+        @JsonProperty("place_name")
+        public String placeName;
         @ApiModelProperty(value = "장소 상세 페이지 URL", example = "http://place.map.kakao.com/1376253571")
-        public String place_url;
+        @JsonProperty("place_url")
+        public String placeUrl;
         @ApiModelProperty(value = "전체 도로명 주소", example = "서울 용산구 보광로 126")
-        public String road_address_name;
+        @JsonProperty("road_address_name")
+        public String roadAddressName;
         @ApiModelProperty(value = "X 좌표 혹은 경도(longitude)", example = "126.99421849699539")
         public String x;
         @ApiModelProperty(value = "Y 좌표 혹은 위도(latitude)", example = "37.53401162895581")
