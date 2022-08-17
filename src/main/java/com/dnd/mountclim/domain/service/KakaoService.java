@@ -1,19 +1,11 @@
 package com.dnd.mountclim.domain.service;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,17 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.dnd.mountclim.config.AppConfig;
 import com.dnd.mountclim.domain.dto.KakaoResponseDto;
 import com.dnd.mountclim.domain.dto.KakaoResponseDto.Document;
-import com.dnd.mountclim.domain.dto.KakaoResponseDto.Document.Menu;
 
 @Service
 public class KakaoService {
-
-	private final int INDEX_NOT_FOUND = -1;
-	private final String WEB_DRIVER_ID = "webdriver.chrome.driver"; 															// 드라이버 ID
-	private final String WEB_DRIVER_PATH = Paths.get(AppConfig.getOsPath("dnd"), new String[]{AppConfig.getChromePath()}).toString();  // 드라이버 경로
+	
+	@Autowired
+	private DinignCodeService dinignCodeService;
 	
 	@Value("${kakao.api.key}")
 	private String KAKAO_APIKEY;	
@@ -41,10 +30,6 @@ public class KakaoService {
 	KakaoResponseDto newKakaoResponseDto;
 	List<Document> newDocuments;
 	
-	WebDriver driver = null;
-	WebDriverWait webDriverWait = null;
-	JavascriptExecutor executor = null;
-
 	public ResponseEntity<KakaoResponseDto> kakaoApi(
 		String food,
 		String latitude,
@@ -129,92 +114,5 @@ public class KakaoService {
 		} catch(Exception e) {
 			throw e;
 		}
-	}
-	
-	public void placeUrlCrawling(Document document) {
-		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
-		ChromeOptions options = new ChromeOptions();
-		options.addArguments("headless");
-		options.addArguments("window-size=1920x1080");
-		options.addArguments("disable-gpu");
-		options.addArguments("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
-		options.addArguments("lang=ko_KR");
-		driver = new ChromeDriver(options);
-		executor = (JavascriptExecutor) driver;
-		webDriverWait = new WebDriverWait(driver, 10);
-		
-		driver.get(document.place_url);
-		WebElement kakaoWrap = driver.findElement(By.id("kakaoWrap"));
-//		executor.executeScript("arguments[0].click();", kakaoWrap);	
-		webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("link_evaluation")));
-		
-		// ****** 리뷰 및 후기 갯수 가져오기 ******
-		List<WebElement> linkEvaluations = kakaoWrap.findElements(By.className("link_evaluation"));
-		if(linkEvaluations.size() > 0) {
-			if(linkEvaluations.size() == 1) {
-				String discuss = linkEvaluations.get(0).getAttribute("data-cnt");
-				document.setDiscuss(Integer.parseInt(discuss));
-				document.setReview(0);
-			} else {
-				String discuss = linkEvaluations.get(0).getAttribute("data-cnt");
-				String review = linkEvaluations.get(1).getAttribute("data-cnt");
-				document.setDiscuss(Integer.parseInt(discuss));
-				document.setReview(Integer.parseInt(review));	
-			}
-		} else {
-			document.setDiscuss(0);
-			document.setReview(0);
-		}
-		// ******************************
-		
-		// ****** 메뉴 데이터 가져오기 *********
-		List<WebElement> menuInfos = kakaoWrap.findElements(By.className("info_menu"));
-		List<Menu> menus = new ArrayList<>();
-		for(WebElement menuInfo : menuInfos) {
-			Menu menu = new Menu();
-			List<WebElement> menuName = menuInfo.findElements(By.className("loss_word"));
-			List<WebElement> menuPrice = menuInfo.findElements(By.className("price_menu"));
-			
-			if(menuName.size() > 0) {
-				menu.setMenu_name(menuName.get(0).getText());
-			}
-			if(menuPrice.size() > 0) {				
-				menu.setMenu_price(menuPrice.get(0).getText());
-			}
-			if(menuName.size() > 0 && !"".equals(menuName.get(0).getText())) {
-				menus.add(menu);
-			}
-		}
-		document.setMenus(menus);		
-		// *****************************
-		
-		// ****** imgUrl 데이터 가져오기 ****
-		List<WebElement> linkPhotos = kakaoWrap.findElements(By.className("link_photo"));
-		List<String> photoList = new ArrayList<>();
-		for(WebElement linkPhoto : linkPhotos) {
-			String imgUrl = linkPhoto.getAttribute("style") + "";
-			if("".equals(imgUrl)) {
-				continue;
-			}
-			String img = "http:" + substringBetween(imgUrl, "\"", "\"");
-			photoList.add(img);
-		}
-		document.setImg_url(photoList);		
-		//*****************************
-		driver.close();
-	}
-	
-	public String substringBetween(String str, String open, String close) {		
-		if(str == null) {
-			return null;
-		}
-		final int start = str.indexOf(open);
-		if (start != INDEX_NOT_FOUND) {
-			final int end = str.indexOf(close, start + open.length());
-			if (end != INDEX_NOT_FOUND) {
-				return str.substring(start + open.length(), end);
-			}
-		}
-		return null;
 	}
 }
