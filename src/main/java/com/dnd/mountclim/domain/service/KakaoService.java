@@ -91,11 +91,24 @@ public class KakaoService {
 		List<Document> documents = kakaoResponseDto.documents;
 		try {
 			for(Document document : documents) {
-				String category_name = document.category_name.replace(" ", "").split(">")[1];
-				
-				if(category_name.equals(food)) {
+				if(food.equals("국밥,감자탕")){
+					if(document.category_name.contains("국밥") || document.category_name.contains("감자탕")){
+						newDocuments.add(document);
+					}
+				}
+				else if(food.equals("바")){
+					if(document.category_name.contains("와인바") || document.category_name.contains("오뎅바")
+							|| document.category_name.contains("칵테일바")){
+						newDocuments.add(document);
+					}
+				}
+				else if(food.equals("기타")){
+					if(document.category_name.contains("실내포장마차") || document.category_name.contains("일본식주점")){
+						newDocuments.add(document);
+					}
+				}
+				else if(document.category_name.contains(food)){
 					newDocuments.add(document);
-					dinignCodeService.dinignCodeCrawling(document);
 				}
 			}
 		} catch(Exception e) {
