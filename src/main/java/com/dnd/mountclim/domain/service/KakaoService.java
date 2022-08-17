@@ -1,11 +1,12 @@
 package com.dnd.mountclim.domain.service;
 
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import com.dnd.mountclim.domain.dto.LocationPoint;
+import com.dnd.mountclim.domain.dto.RectanglePoints;
+import com.dnd.mountclim.domain.util.DeduplicationUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -40,15 +41,14 @@ public class KakaoService {
 	
 	KakaoResponseDto newKakaoResponseDto;
 	List<Document> newDocuments;
-	
+
 	WebDriver driver = null;
 	WebDriverWait webDriverWait = null;
 	JavascriptExecutor executor = null;
 
 	public ResponseEntity<KakaoResponseDto> kakaoApi(
 		String food,
-		String latitude,
-		String longitude,
+		List<RectanglePoints> listRectanglePoints,
 		String radius,
 		String round) throws Exception {
 		RestTemplate restTemplate = new RestTemplate();			
@@ -60,38 +60,50 @@ public class KakaoService {
 			HttpEntity<String> entity = new HttpEntity<String>(headers);
 			
 			int page = 1;
-			while(true) {	
-				headers.set("Authorization", "KakaoAK " + KAKAO_APIKEY);
-				String apiURL = "https://dapi.kakao.com/v2/local/search/category.JSON?"
-						+ "&category_group_code=" + "FD6"
-						+ "&x=" + longitude
-						+ "&y=" + latitude
-						+ "&radius=" + radius
-						+ "&page=" + page;
-				
-				ResponseEntity<KakaoResponseDto> responseEntity = restTemplate.exchange(apiURL, HttpMethod.GET, entity, KakaoResponseDto.class);
-				kakaoResponseDto = responseEntity.getBody();	
-				
-				if(kakaoResponseDto.meta.is_end) {
-					this.foodClassification(kakaoResponseDto, food); 
-					break;
-				} else {
-					this.foodClassification(kakaoResponseDto, food); 
-					page++;
+			// 여기에서 감싸야함.
+			for(RectanglePoints rp : listRectanglePoints) {
+				for (LocationPoint lp : rp.getRectanglePoints()) {
+//					System.out.println("longitude : " + lp.getLongitude() + ", latitude : " + lp.getLatitude());
+					while (true) {
+						headers.set("Authorization", "KakaoAK " + KAKAO_APIKEY);
+						String apiURL = "https://dapi.kakao.com/v2/local/search/category.JSON?"
+								+ "&category_group_code=" + "FD6"
+								+ "&x=" + lp.getLongitude()
+								+ "&y=" + lp.getLatitude()
+								+ "&radius=" + radius
+								+ "&page=" + page;
+
+						ResponseEntity<KakaoResponseDto> responseEntity = restTemplate.exchange(apiURL, HttpMethod.GET, entity, KakaoResponseDto.class);
+						kakaoResponseDto = responseEntity.getBody();
+
+						if (kakaoResponseDto.meta.is_end) {
+							this.foodClassification(kakaoResponseDto, food);
+							break;
+						} else {
+							this.foodClassification(kakaoResponseDto, food);
+							page++;
+						}
+					}
 				}
 			}
+
+
+			// 중복제거 // 밑에서 부터는 newDocuments가 아닌 distinctNewDocuments를 사용해야해서 바꿔놨습니다.
+			List<Document> distinctNewDocuments = DeduplicationUtils.deduplication(newDocuments, Document::getId);
+
+
 			// 제일 많은 리뷰 순서대로 줄 세우고 round 갯수만큼 뽑아내기
 			List<Document> orderByDocument = new ArrayList<>();
-			if(newDocuments.size() > 0) {
-				newDocuments = newDocuments.stream().filter(x -> x.review != null).sorted(Comparator.comparing(Document::getReview).reversed()).collect(Collectors.toList());					
+			if(distinctNewDocuments.size() > 0) {
+				distinctNewDocuments = distinctNewDocuments.stream().filter(x -> x.review != null).sorted(Comparator.comparing(Document::getReview).reversed()).collect(Collectors.toList());
 				int max = 0;
-				if(newDocuments.size() >= Integer.parseInt(round)) {
+				if(distinctNewDocuments.size() >= Integer.parseInt(round)) {
 					max = Integer.parseInt(round);
 				} else {
-					max = newDocuments.size();
+					max = distinctNewDocuments.size();
 				}
 				for(int i = 0; i < max; i++) {
-					orderByDocument.add(newDocuments.get(i));
+					orderByDocument.add(distinctNewDocuments.get(i));
 				}
 			}
 			newKakaoResponseDto.setDocuments(orderByDocument);
@@ -106,9 +118,10 @@ public class KakaoService {
 		List<Document> documents = kakaoResponseDto.documents;
 		try {
 			for(Document document : documents) {
+
 				if(food.equals("국밥,감자탕")){
 					if(document.category_name.contains("국밥") || document.category_name.contains("감자탕")){
-						newDocuments.add(document);
+							newDocuments.add(document);
 					}
 				}
 				else if(food.equals("바")){

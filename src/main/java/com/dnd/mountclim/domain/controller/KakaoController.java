@@ -1,6 +1,5 @@
 package com.dnd.mountclim.domain.controller;
 
-import com.dnd.mountclim.domain.dto.LocationPoint;
 import com.dnd.mountclim.domain.dto.RectanglePoints;
 import com.dnd.mountclim.domain.service.PointService;
 import org.springframework.http.ResponseEntity;
@@ -44,21 +43,22 @@ public class KakaoController {
 		@RequestParam(name = "radius", required = true) String radius,
 		@RequestParam(name = "round", required = true) String round) throws Exception {
 
-		RectanglePoints rectanglePoints = pointService.getRectanglePoints(Double.parseDouble(latitude), Double.parseDouble(longitude), Double.parseDouble(radius)); // km 기준 입니다.
+		RectanglePoints rectanglePoints = pointService.getRectanglePoints(Double.parseDouble(latitude), Double.parseDouble(longitude), Double.parseDouble(radius) * 0.001); // km 기준 입니다.
 
-		System.out.println("=== test1 ===");
-		for (LocationPoint lp : rectanglePoints.getRectanglePoints()){
-			System.out.println("lat : " + lp.getLatitude() + ", lng : " + lp.getLongitude());
-		}
-		List<RectanglePoints> listRectanglePoints = pointService.getRectanglePoints(rectanglePoints, Double.parseDouble(radius) / 2);
+//		System.out.println("=== test1 ===");
+//		for (LocationPoint lp : rectanglePoints.getRectanglePoints()){
+//			System.out.println("lat : " + lp.getLatitude() + ", lng : " + lp.getLongitude());
+//		}
+		List<RectanglePoints> listRectanglePoints = pointService.getRectanglePoints(rectanglePoints, Double.parseDouble(radius) * 0.001 / 2);
 
-		System.out.println("=== test ===");
-		for(RectanglePoints rp : listRectanglePoints){
-			for(LocationPoint lp : rp.getRectanglePoints()){
-				System.out.println("lat : " + lp.getLatitude() + ", lng : " + lp.getLongitude());
-			}
-		}
-		// TODO 위도 경도는 위에처럼 꺼내서 쓰시면 되고, radius는 'radius = radius / 4;'해서 탐색해야 합니다.
-		return haeyongService.kakaoApi(food, latitude, longitude, radius, round);
+//		System.out.println("=== test ===");
+//		for(RectanglePoints rp : listRectanglePoints){
+//			for(LocationPoint lp : rp.getRectanglePoints()){
+//				System.out.println("lat : " + lp.getLatitude() + ", lng : " + lp.getLongitude());
+//			}
+//		}
+		// FIXME 16분할 했으므로, radius는 'radius = radius / 4;'로 탐색, 분할 개수 바뀌면 수정해야함.
+		radius = String.valueOf(Double.parseDouble(radius) / 4);
+		return haeyongService.kakaoApi(food, listRectanglePoints, radius, round);
 	}
 }
