@@ -53,17 +53,12 @@ public class KakaoServiceTest {
 		List<WebElement> linkEvaluations = kakaoWrap.findElements(By.className("link_evaluation"));
 		if(linkEvaluations.size() > 0) {
 			if(linkEvaluations.size() == 1) {
-				String discuss = linkEvaluations.get(0).getAttribute("data-cnt");
-				document.setDiscuss(Integer.parseInt(discuss));
 				document.setReview(0);
 			} else {
-				String discuss = linkEvaluations.get(0).getAttribute("data-cnt");
 				String review = linkEvaluations.get(1).getAttribute("data-cnt");
-				document.setDiscuss(Integer.parseInt(discuss));
 				document.setReview(Integer.parseInt(review));	
 			}
 		} else {
-			document.setDiscuss(0);
 			document.setReview(0);
 		}
 		// ******************************
