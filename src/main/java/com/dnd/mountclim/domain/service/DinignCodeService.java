@@ -106,7 +106,6 @@ public class DinignCodeService {
 				System.out.println("리뷰 : " + 0);
 				document.setReview(0);
 			}
-			document.setDiscuss(0);		
 			// ******************************
 			
 			// ****** 메뉴 데이터 가져오기 *********
@@ -151,5 +150,6 @@ public class DinignCodeService {
 			document.setImg_url(photoList);
 			// *****************************
 		}
+		driver.close();
 	}
 }

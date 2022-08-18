@@ -41,8 +41,6 @@ public class KakaoResponseDto {
 		@ApiModelProperty(value = "Y 좌표 혹은 위도(latitude)", example = "37.53401162895581")
 		public String y;
 		@ApiModelProperty(value = "결과 페이지 번호", example = "1~45 사이의 값 (기본값: 1)")
-		public Integer discuss;
-		@ApiModelProperty(value = "결과 페이지 번호", example = "1~45 사이의 값 (기본값: 1)")
 		public Integer review;
 		@ApiModelProperty(value = "이미지 url", example = "1~45 사이의 값 (기본값: 1)")
 		public List<String> img_url;
