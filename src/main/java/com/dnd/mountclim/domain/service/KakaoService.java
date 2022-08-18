@@ -128,7 +128,10 @@ public class KakaoService {
 	}
 	
 	public void placeUrlCrawling(Document document) {
+		try{
 		driver.get(document.place_url);
+			Thread.sleep(3000);
+		}catch(Exception ex){}
 		WebElement kakaoWrap = driver.findElement(By.id("kakaoWrap"));
 		executor.executeScript("arguments[0].click();", kakaoWrap);	
 		webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.className("link_evaluation")));

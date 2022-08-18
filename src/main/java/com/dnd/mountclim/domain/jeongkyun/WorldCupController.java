@@ -20,14 +20,17 @@ public class WorldCupController {
             @ApiImplicitParam(name = "latitude", value = "위도", required = true, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "longitude", value = "경도", required = true, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "radius", value = "거리", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "round", value = "대진표 갯수", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "category", value = "음식 종류", required = false, dataType = "string", paramType = "query")
     })
     public ResponseEntity<?> worldCupSearch(
             @RequestParam(name = "latitude", required = true) String latitude,
             @RequestParam(name = "longitude", required = true) String longitude,
             @RequestParam(name = "radius", required = true) String radius,
-            @RequestParam(name = "category", required = false) String category) {
+            @RequestParam(name = "round", required = true) int round,
+            @RequestParam(name = "category", required = false) String category
+            ) {
 
-        return worldCupService.worldCupSearch(latitude, longitude, radius, category);
+        return worldCupService.worldCupSearch(latitude, longitude, radius, round,category);
     }
 }
