@@ -111,6 +111,7 @@ public class KakaoService {
 //					newDocuments.add(document);
 //				}
 //			}
+			int count = 1;
 			for(Document document : documents) {
 				String category_name = document.category_name.replace(" ", "").split(">")[1];
 
@@ -118,7 +119,14 @@ public class KakaoService {
 					newDocuments.add(document);
 					dinignCodeService.dinignCodeCrawling(document);
 				}
+				
+				if(count == 16) {
+					break;
+				}
+				count++;
+				System.err.println("갯수 : " + count);
 			}
+			dinignCodeService.driverClose();
 		} catch(Exception e) {
 			throw e;
 		}

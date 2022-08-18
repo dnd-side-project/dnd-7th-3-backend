@@ -82,6 +82,9 @@ public class DinignCodeService {
 	}
 	
 	public void dinignCodeCrawling(Document document) {
+		if(driver == null) {
+			driver = new ChromeDriver(options);
+		}
 		System.out.println(document.road_address_name+", "+ document.place_name);
 		driver.get("http://www.diningcode.com/search?query="+document.road_address_name+", " + document.place_name);
 		
@@ -150,6 +153,10 @@ public class DinignCodeService {
 			document.setImg_url(photoList);
 			// *****************************
 		}
-		driver.close();
+	}
+	public void driverClose() {
+		if(driver != null) {			
+			driver.quit();
+		}
 	}
 }
