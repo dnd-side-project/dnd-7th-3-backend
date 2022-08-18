@@ -118,13 +118,13 @@ public class KakaoService {
 				if(category_name.equals(food)) {
 					newDocuments.add(document);
 					dinignCodeService.dinignCodeCrawling(document);
+					System.err.println("갯수 : " + count);
+					count++;
 				}
 				
 				if(count == 16) {
 					break;
 				}
-				count++;
-				System.err.println("갯수 : " + count);
 			}
 			dinignCodeService.driverClose();
 		} catch(Exception e) {
