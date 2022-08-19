@@ -53,6 +53,7 @@ public class KakaoService {
 			String divisionRadius = String.valueOf(Double.parseDouble(radius) / 4);
 
 			int page = 1;
+
 			for(RectanglePoints rp : listRectanglePoints) {
 				for (LocationPoint lp : rp.getRectanglePoints()) {
 
@@ -127,6 +128,8 @@ public class KakaoService {
 			newKakaoResponseDto.setMeta(kakaoResponseDto.meta);
 		} catch(Exception e) {
 			throw e;
+		} finally {
+			dinignCodeService.driverClose();
 		}
 		return new ResponseEntity<KakaoResponseDto>(newKakaoResponseDto, headers, HttpStatus.valueOf(200));
 	}
