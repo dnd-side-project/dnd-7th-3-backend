@@ -70,3 +70,10 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+naver:
+  client:
+    secret:
+      key: ${naver.client.secret.key}
+    id:
+      key: ${naver.client.id.key}

@@ -34,7 +34,7 @@ public class KakaoService {
 	KakaoResponseDto newKakaoResponseDto;
 	List<Document> newDocuments;
 
-	public ResponseEntity<KakaoResponseDto> kakaoApi(
+	public ResponseEntity<KakaoResponseDto> getWorldCupInfo(
 		String food,
 		List<RectanglePoints> listRectanglePoints,
 		String latitude,
@@ -128,8 +128,6 @@ public class KakaoService {
 			newKakaoResponseDto.setMeta(kakaoResponseDto.meta);
 		} catch(Exception e) {
 			throw e;
-		} finally {
-			dinignCodeService.driverClose();
 		}
 		return new ResponseEntity<KakaoResponseDto>(newKakaoResponseDto, headers, HttpStatus.valueOf(200));
 	}
