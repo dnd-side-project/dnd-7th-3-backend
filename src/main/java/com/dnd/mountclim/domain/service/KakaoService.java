@@ -1,10 +1,12 @@
 package com.dnd.mountclim.domain.service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
+import com.dnd.mountclim.domain.dto.LocationPoint;
+import com.dnd.mountclim.domain.dto.RectanglePoints;
+import com.dnd.mountclim.domain.util.DeduplicationUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -19,19 +21,22 @@ import com.dnd.mountclim.domain.dto.KakaoResponseDto;
 import com.dnd.mountclim.domain.dto.KakaoResponseDto.Document;
 
 @Service
+@RequiredArgsConstructor
 public class KakaoService {
-	
-	@Autowired
-	private DinignCodeService dinignCodeService;
+
+	private final DistanceService distanceService;
+
+	private final NaverService naverService;
 	
 	@Value("${kakao.api.key}")
 	private String KAKAO_APIKEY;	
 	
 	KakaoResponseDto newKakaoResponseDto;
 	List<Document> newDocuments;
-	
+
 	public ResponseEntity<KakaoResponseDto> kakaoApi(
 		String food,
+		List<RectanglePoints> listRectanglePoints,
 		String latitude,
 		String longitude,
 		String radius,
@@ -43,45 +48,83 @@ public class KakaoService {
 		newDocuments = new ArrayList<>();
 		try {
 			HttpEntity<String> entity = new HttpEntity<String>(headers);
-			
+
+			// FIXME 16분할 했으므로, divisionRadius는 'divisionRadius는 = radius / 4;'로 탐색, 분할 개수 바뀌면 수정해야함.
+			String divisionRadius = String.valueOf(Double.parseDouble(radius) / 4);
+
 			int page = 1;
-			dinignCodeService.driverInit();
-			
-			while(true) {	
-				headers.set("Authorization", "KakaoAK " + KAKAO_APIKEY);
-				String apiURL = "https://dapi.kakao.com/v2/local/search/category.JSON?"
-						+ "&category_group_code=" + "FD6"
-						+ "&x=" + longitude
-						+ "&y=" + latitude
-						+ "&radius=" + radius
-						+ "&page=" + page;
-				
-				ResponseEntity<KakaoResponseDto> responseEntity = restTemplate.exchange(apiURL, HttpMethod.GET, entity, KakaoResponseDto.class);
-				kakaoResponseDto = responseEntity.getBody();	
-				
-				if(kakaoResponseDto.meta.is_end) {
-					this.foodClassification(kakaoResponseDto, food); 
-					break;
-				} else {
-					this.foodClassification(kakaoResponseDto, food); 
-					page++;
+
+			for(RectanglePoints rp : listRectanglePoints) {
+				for (LocationPoint lp : rp.getRectanglePoints()) {
+
+					while (true) {
+						headers.set("Authorization", "KakaoAK " + KAKAO_APIKEY);
+						String apiURL = "https://dapi.kakao.com/v2/local/search/category.JSON?"
+								+ "&category_group_code=" + "FD6"
+								+ "&x=" + lp.getLongitude()
+								+ "&y=" + lp.getLatitude()
+								+ "&radius=" + divisionRadius
+								+ "&page=" + page;
+
+						ResponseEntity<KakaoResponseDto> responseEntity = restTemplate.exchange(apiURL, HttpMethod.GET, entity, KakaoResponseDto.class);
+						kakaoResponseDto = responseEntity.getBody();
+
+						if (kakaoResponseDto.meta.is_end) {
+							this.foodClassification(kakaoResponseDto, food);
+							break;
+						} else {
+							this.foodClassification(kakaoResponseDto, food);
+							page++;
+						}
+					}
 				}
 			}
-			// 제일 많은 리뷰 순서대로 줄 세우고 round 갯수만큼 뽑아내기
-			List<Document> orderByDocument = new ArrayList<>();
-			if(newDocuments.size() > 0) {
-				newDocuments = newDocuments.stream().filter(x -> x.review != null).sorted(Comparator.comparing(Document::getReview).reversed()).collect(Collectors.toList());					
-				int max = 0;
-				if(newDocuments.size() >= Integer.parseInt(round)) {
-					max = Integer.parseInt(round);
-				} else {
-					max = newDocuments.size();
-				}
-				for(int i = 0; i < max; i++) {
-					orderByDocument.add(newDocuments.get(i));
-				}
+
+			// 중복제거
+			List<Document> distinctNewDocuments = DeduplicationUtils.deduplication(newDocuments, Document::getId);
+			// 거리 업데이트 // 분할된 지점으로부터 거리가 나오기 때문에, 원위치로부터 거리 다시 계산
+			for(Document d : distinctNewDocuments){
+				double distanceMeter = distanceService.distance(Double.parseDouble(d.getY()), Double.parseDouble(d.getX()), Double.parseDouble(latitude), Double.parseDouble(longitude), "meter");
+				d.setDistance(String.valueOf(distanceMeter));
 			}
-			newKakaoResponseDto.setDocuments(orderByDocument);
+
+			// 검색 개수와 거리를 이용해서 정렬
+			// 검색개수 가중치 : 70%, 거리 가중치 : 30%
+			float search_weight = 70;
+			float distance_weight = 30;
+			Map<Document, Float> map = new HashMap<>();
+			for(Document d : distinctNewDocuments){
+				float score;
+				int total = naverService.naverApi(d.getPlace_name());
+				double distance = Double.parseDouble(d.getDistance());
+
+				if(total < 500)
+					score =  1.0f / 3.0f * search_weight;
+				else if(total < 1000)
+					score = 2.0f / 3.0f * search_weight;
+				else
+					score = search_weight;
+
+				if(distance < Double.parseDouble(radius) / 3.0d)
+					score += distance_weight;
+				else if(distance < Double.parseDouble(radius) * 2.0d / 3.0d)
+					score += 2.0f / 3.0f * distance_weight;
+				else
+					score += 1.0f / 3.0f * distance_weight;
+
+				map.put(d, score);
+				TimeUnit.MILLISECONDS.sleep(50); //FIXME '429 Too Many Requests'에 대한 해결책
+			}
+
+			List<Document> keySetList = new ArrayList<>(map.keySet());
+
+			Collections.sort(keySetList, (o1, o2) -> (map.get(o2).compareTo(map.get(o1))));
+
+			if(keySetList.size() > Integer.parseInt(round)){
+				keySetList = keySetList.subList(0, Integer.parseInt(round));
+			}
+
+			newKakaoResponseDto.setDocuments(keySetList);
 			newKakaoResponseDto.setMeta(kakaoResponseDto.meta);
 		} catch(Exception e) {
 			throw e;
@@ -90,8 +133,8 @@ public class KakaoService {
 		}
 		return new ResponseEntity<KakaoResponseDto>(newKakaoResponseDto, headers, HttpStatus.valueOf(200));
 	}
-	
-	public void foodClassification(KakaoResponseDto kakaoResponseDto, String food) throws Exception {
+
+	public void foodClassification(KakaoResponseDto kakaoResponseDto, String food) {
 		List<Document> documents = kakaoResponseDto.documents;
 		try {
 			for(Document document : documents) {
