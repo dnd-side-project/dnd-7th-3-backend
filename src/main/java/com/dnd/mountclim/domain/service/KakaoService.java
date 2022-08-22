@@ -2,6 +2,7 @@ package com.dnd.mountclim.domain.service;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import com.dnd.mountclim.domain.dto.LocationPoint;
 import com.dnd.mountclim.domain.dto.RectanglePoints;
@@ -127,6 +128,8 @@ public class KakaoService {
 				for(Document document : keySetList) {
 					dinignCodeService.dinignCodeCrawling(document);
 				}
+				// 이미지 url이 없다면 제거
+				keySetList = keySetList.stream().filter(x -> x.img_url != null).collect(Collectors.toList());
 			}
 
 			newKakaoResponseDto.setDocuments(keySetList);
