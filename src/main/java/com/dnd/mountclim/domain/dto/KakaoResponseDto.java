@@ -14,7 +14,6 @@ public class KakaoResponseDto {
 	
 	@Data
 	public static class Document {
-		public List<Menu> menus;
 		
 		@ApiModelProperty(value = "전체 지번 주소", example = "서울 용산구 이태원동 127-28")
 		public String address_name;
@@ -40,18 +39,12 @@ public class KakaoResponseDto {
 		public String x;
 		@ApiModelProperty(value = "Y 좌표 혹은 위도(latitude)", example = "37.53401162895581")
 		public String y;
-		@ApiModelProperty(value = "결과 페이지 번호", example = "1~45 사이의 값 (기본값: 1)")
+		@ApiModelProperty(value = "리뷰", example = "145")
 		public Integer review;
-		@ApiModelProperty(value = "이미지 url", example = "1~45 사이의 값 (기본값: 1)")
+		@ApiModelProperty(value = "이미지 url", example = "https://s3-ap-northeast-1.amazonaws.com/dcicons/new/images/web/noimage/1.jpg")
 		public List<String> img_url;
-		
-		@Data
-		public static class Menu {
-			@ApiModelProperty(value = "메뉴명", example = "프랭크버거R")
-			public String menu_name;
-			@ApiModelProperty(value = "메뉴 가격", example = "3,900")
-			public String menu_price;
-		}
+		@ApiModelProperty(value = "태그", example = "#백년가게, #가족외식, #무료주차, #배달")
+		public String tag;
 	}
 	@Data 
 	public static class Meta {

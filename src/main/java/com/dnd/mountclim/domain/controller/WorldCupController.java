@@ -2,6 +2,7 @@ package com.dnd.mountclim.domain.controller;
 
 import com.dnd.mountclim.domain.dto.RectanglePoints;
 import com.dnd.mountclim.domain.service.PointService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,11 +31,11 @@ public class WorldCupController {
 	@GetMapping
 	@ApiOperation(value = "카카오 API 연동", notes = "카카오 API 를 통해 음식점 데이터를 가져온다.")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "food", value = "음식 종류", required = false, dataType = "string", paramType = "query"),
-		@ApiImplicitParam(name = "latitude", value = "위도", required = true, dataType = "string", paramType = "query"),
-		@ApiImplicitParam(name = "longitude", value = "경도", required = true, dataType = "string", paramType = "query"),
-		@ApiImplicitParam(name = "radius", value = "거리", required = true, dataType = "string", paramType = "query"),
-		@ApiImplicitParam(name = "round", value = "대진표 갯수", required = true, dataType = "string", paramType = "query")
+		@ApiImplicitParam(name = "food", value = "음식 종류", required = false, dataType = "string", paramType = "query", example = "국밥,감자탕|바|기타"),
+		@ApiImplicitParam(name = "latitude", value = "위도", required = true, dataType = "string", paramType = "query", example = "37.86898080174088"),
+		@ApiImplicitParam(name = "longitude", value = "경도", required = true, dataType = "string", paramType = "query", example = "127.71282156154844"),
+		@ApiImplicitParam(name = "radius", value = "거리", required = true, dataType = "string", paramType = "query", example = "1000"),
+		@ApiImplicitParam(name = "round", value = "대진표 갯수", required = true, dataType = "string", paramType = "query", example = "16")
 	})
 	public ResponseEntity<KakaoResponseDto> getWorldCupInfo(
 		@RequestParam(name = "food", required = false) String food,
@@ -47,6 +48,9 @@ public class WorldCupController {
 
 		List<RectanglePoints> listRectanglePoints = pointService.getRectanglePoints(rectanglePoints, Double.parseDouble(radius) * 0.001 / 2);
 
+		// ***** 음식종류 처리 예시 *****
+		// List<String> foodList = Arrays.asList(food.split("\\|"));
+		// ***********************
 		return kakaoService.getWorldCupInfo(food, listRectanglePoints, latitude, longitude, radius, round);
 	}
 }
