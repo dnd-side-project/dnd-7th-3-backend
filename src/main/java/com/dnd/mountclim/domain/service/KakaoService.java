@@ -2,12 +2,12 @@ package com.dnd.mountclim.domain.service;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import com.dnd.mountclim.domain.dto.LocationPoint;
 import com.dnd.mountclim.domain.dto.RectanglePoints;
 import com.dnd.mountclim.domain.util.DeduplicationUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +25,7 @@ import com.dnd.mountclim.domain.dto.KakaoResponseDto.Document;
 public class KakaoService {
 
 	private final DistanceService distanceService;
-
+	private final DinignCodeService dinignCodeService;
 	private final NaverService naverService;
 	
 	@Value("${kakao.api.key}")
@@ -122,12 +122,22 @@ public class KakaoService {
 
 			if(keySetList.size() > Integer.parseInt(round)){
 				keySetList = keySetList.subList(0, Integer.parseInt(round));
+				
+				dinignCodeService.driverInit();
+				
+				for(Document document : keySetList) {
+					dinignCodeService.dinignCodeCrawling(document);
+				}
+				// 이미지 url이 없다면 제거
+				keySetList = keySetList.stream().filter(x -> x.img_url != null).collect(Collectors.toList());
 			}
 
 			newKakaoResponseDto.setDocuments(keySetList);
 			newKakaoResponseDto.setMeta(kakaoResponseDto.meta);
 		} catch(Exception e) {
 			throw e;
+		} finally {
+			dinignCodeService.driverQuit();
 		}
 		return new ResponseEntity<KakaoResponseDto>(newKakaoResponseDto, headers, HttpStatus.valueOf(200));
 	}

@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import com.dnd.mountclim.config.AppConfig;
 import com.dnd.mountclim.domain.dto.KakaoResponseDto.Document;
-import com.dnd.mountclim.domain.dto.KakaoResponseDto.Document.Menu;
 
 @Service
 public class DinignCodeService {
@@ -93,7 +92,7 @@ public class DinignCodeService {
 		if(element.size() > 0) {			
 			org.jsoup.nodes.Document dom = Jsoup.parse(element.get(0).getAttribute("innerHTML"));
 
-			// ****** 리뷰 및 후기 갯수 가져오기 ******
+			// ****** 리뷰 및 후기 갯수 가져오기 *****
 			Elements reviewElements = dom.select(".heart");
 			if(reviewElements.size() > 0) {
 				String review = reviewElements.get(0).text();
@@ -103,12 +102,15 @@ public class DinignCodeService {
 			}
 			// ******************************
 			
-			// ****** 메뉴 데이터 가져오기 *********
-			List<Menu> menus = new ArrayList<>();
-			document.setMenus(menus);
-			// *****************************
-			
-			// ****** imgUrl 데이터 가져오기 ****
+			// ****** 해시태그 가져오기 ***********
+			Elements tagElements = dom.select(".Hash");
+			if(tagElements.size() > 0) {
+				String tag = tagElements.get(0).text();
+				document.setTag(tag);
+			}
+			// ******************************
+		
+			// ****** imgUrl 데이터 가져오기 *****
 			Elements imgUrlElements = dom.select(".title");
 			List<String> imgUrlList = new ArrayList<>();
 			if(imgUrlElements.size() > 0) {	
@@ -116,10 +118,10 @@ public class DinignCodeService {
 				imgUrlList.add(imgUrl);
 			}
 			document.setImg_url(imgUrlList);
-			// *****************************
+			// ******************************
 		}
 	}
-	public void driverClose() {
+	public void driverQuit() {
 		if(driver != null) {			
 			driver.quit();
 		}
