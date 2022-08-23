@@ -37,7 +37,7 @@ jobs:
     - name: Step 6 - Make directory for deploy
       run: mkdir deploy
       
-    - name: Stein 7 - Copy jar
+    - name: Step 7 - Copy jar
       run: cp ./target/*.jar ./deploy
       
     - name: Step 8 - What is in the deploy folder
@@ -69,6 +69,7 @@ jobs:
         --region ap-northeast-2 \
         --acl private \
         ./2ndgo.zip s3://my-2andgo-bucket/
+        
     - name: Step 14 - Deploy with AWS codeDeploy
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
