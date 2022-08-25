@@ -12,10 +12,10 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class NaverService {
 
-    @Value("${naver.client.id.key}")
+    @Value("${naver.api.id.key}")
     private String NAVER_API_IDKEY;
 
-    @Value("${naver.client.secret.key}")
+    @Value("${naver.api.secret.key}")
     private String NAVER_API_SECRETKEY;
 
     public int naverApi(String place_name){

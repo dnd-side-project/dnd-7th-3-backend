@@ -72,8 +72,8 @@ logging:
               BasicBinder: TRACE
 
 naver:
-  client:
-    secret:
-      key: ${naver.client.secret.key}
+  api:
     id:
-      key: ${naver.client.id.key}
+      key: ${naver.api.id.key}
+    secret:
+      key: ${naver.api.secret.key}
