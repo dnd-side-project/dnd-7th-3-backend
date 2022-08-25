@@ -95,7 +95,7 @@ public class KakaoService {
 			Map<Document, Float> map = new HashMap<>();
 			for(Document d : distinctNewDocuments){
 				float score;
-				int total = naverService.naverApi(d.getPlace_name());
+				int total = naverService.naverPlaceSearchApi(d.getPlace_name());
 				double distance = Double.parseDouble(d.getDistance());
 
 				if(total < 500)
