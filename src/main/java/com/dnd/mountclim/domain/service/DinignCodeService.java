@@ -93,12 +93,12 @@ public class DinignCodeService {
 			org.jsoup.nodes.Document dom = Jsoup.parse(element.get(0).getAttribute("innerHTML"));
 
 			// ****** 리뷰 및 후기 갯수 가져오기 *****
-			Elements reviewElements = dom.select(".heart");
-			if(reviewElements.size() > 0) {
-				String review = reviewElements.get(0).text();
-				document.setReview(Integer.parseInt(review));
+			Elements reviewCntElements = dom.select(".heart");
+			if(reviewCntElements.size() > 0) {
+				String reviewCnt = reviewCntElements.get(0).text();
+				document.setReviewCnt(Integer.parseInt(reviewCnt));
 			} else {
-				document.setReview(0);
+				document.setReviewCnt(0);
 			}
 			// ******************************
 			
@@ -118,6 +118,15 @@ public class DinignCodeService {
 				imgUrlList.add(imgUrl);
 			}
 			document.setImg_url(imgUrlList);
+			// ******************************
+
+			// ****** 한줄 리뷰 데이터 가져오기 *****
+			Elements reviewTextElements = dom.select(".Review");
+			String reviewText = "";
+			if(reviewTextElements.size() > 0) {
+				reviewText = reviewTextElements.get(0).text();
+			}
+			document.setReviewText(reviewText);
 			// ******************************
 		}
 	}

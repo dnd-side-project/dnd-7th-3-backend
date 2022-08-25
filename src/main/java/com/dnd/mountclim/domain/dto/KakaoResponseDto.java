@@ -2,6 +2,7 @@ package com.dnd.mountclim.domain.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -40,13 +41,15 @@ public class KakaoResponseDto {
 		@ApiModelProperty(value = "Y 좌표 혹은 위도(latitude)", example = "37.53401162895581")
 		public String y;
 		@ApiModelProperty(value = "리뷰", example = "145")
-		public Integer review;
+		public Integer reviewCnt;
+		@ApiModelProperty(value = "한줄 리뷰", example = "최고에요!!")
+		public String reviewText;
 		@ApiModelProperty(value = "이미지 url", example = "https://s3-ap-northeast-1.amazonaws.com/dcicons/new/images/web/noimage/1.jpg")
 		public List<String> img_url;
 		@ApiModelProperty(value = "태그", example = "#백년가게, #가족외식, #무료주차, #배달")
 		public String tag;
 	}
-	@Data 
+	@Data
 	public static class Meta {
 		@ApiModelProperty(value = "검색어에 검색된 문서 수", example = "0")
 		public Integer total_count;
