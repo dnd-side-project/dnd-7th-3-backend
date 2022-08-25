@@ -66,6 +66,16 @@ public class AppConfig {
 		return (new File(String.format("/%s", new Object[]{appHome}))).getPath();
 	}
 	
+	public static String getChromePath() {
+		if (isWindow())
+			return "chromedriver.exe";
+		if (isMacOS())
+			return "chromedriver";
+		if (isLinux())
+			return "chromedriver";
+		return "";
+	}
+	
 	public static String getUserHomeDir() {
 		return System.getProperty("user.home");
 	}

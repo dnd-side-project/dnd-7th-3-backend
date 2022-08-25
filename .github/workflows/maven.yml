@@ -33,3 +33,51 @@ jobs:
       run: |
         cd target
         ls -a
+        
+    - name: Step 6 - Make directory for deploy
+      run: mkdir deploy
+      
+    - name: Step 7 - Copy jar
+      run: cp ./target/*.jar ./deploy
+      
+    - name: Step 8 - What is in the deploy folder
+      run: |
+        cd deploy
+        ls -a
+    
+    - name: Step 9 - Copy appspec
+      run: cp appspec.yml ./deploy
+    
+    - name: Step 10 - Copy Shell
+      run: | 
+        cp ./scripts/* ./deploy
+        cd deploy
+        ls -la
+      
+    - name: Step 11 - Grant execute permission
+      run: chmod +x ./deploy/deploy.sh
+
+    - name: Step 12 - Make zip file
+      run: zip -r 2ndgo.zip ./deploy
+      
+    - name: Step 13 - Deliver to AWS S3
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+      run: |
+        aws s3 cp \
+        --region ap-northeast-2 \
+        --acl private \
+        ./2ndgo.zip s3://my-2andgo-bucket/
+        
+    - name: Step 14 - Deploy with AWS codeDeploy
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+      run: |
+        aws deploy create-deployment \
+        --application-name gitubaction \
+        --deployment-group-name githubaction-group \
+        --file-exists-behavior OVERWRITE \
+        --s3-location bucket=my-2andgo-bucket,bundleType=zip,key=2ndgo.zip \
+        --region ap-northeast-2

@@ -9,26 +9,17 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.2.RELEASE</version>
+		<version>2.5.6</version>
 		<relativePath />
 	</parent>
 
 	<dependencies>
-		<!-- oauth -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-client</artifactId>
-		</dependency>
 		<!-- spring data jpa -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<!-- spring security -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		<!-- spring web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -40,6 +31,7 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		<!-- mariadb -->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
@@ -51,6 +43,7 @@
 		    <artifactId>mybatis-spring-boot-starter</artifactId>
 		    <version>2.2.0</version>
 		</dependency>
+		<!-- lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -79,6 +72,25 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+		<!-- jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.13.1</version>
+		</dependency>
+		<!-- selenium -->
+		<dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>selenium-server</artifactId>
+		    <version>3.141.59</version>
+		</dependency>
+		<!-- guava -->
+		<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>25.0-jre</version>
+		</dependency>
+		<!-- test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -90,10 +102,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- JSON -->
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 	</dependencies>
 

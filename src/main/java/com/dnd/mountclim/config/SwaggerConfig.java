@@ -18,8 +18,8 @@ import java.util.Set;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private static final String API_TITLE = "TITLE";
-    private static final String API_DESCRIPTION = "TITLE Server API Docs";
+    private static final String API_TITLE = "2nd Go API";
+    private static final String API_DESCRIPTION = "2nd Go Server API Docs";
     private static final String API_VERSION = "0.0.1";
 
 	@Bean
@@ -28,7 +28,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.dnd.mountclim.domain.controller"))
                 .paths(PathSelectors.any())
                 .build();
 
