@@ -1,7 +1,11 @@
 package com.dnd.mountclim.domain.service;
 
 
+import com.dnd.mountclim.domain.util.DateParsing;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.*;
@@ -9,33 +13,59 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootTest
-public class NaverSearch {
+public class NaverSearchTest {
+    @Value("${naver.api.id.key}")
+    private String clientId;
+
+    @Value("${naver.api.secret.key}")
+    private String clientSecret;
+
     @Test
-    public void test111(){
-        String clientId = "WF0HGq0Zb4bfduI8oYLZ"; // 애플리케이션 클라이언트 아이디
-        String clientSecret = "57Qdl6tu67"; // 애플리케이션 클라이언트 시크릿
+    public void naverSearchTest(){
 
         String apiUrl = "https://openapi.naver.com/v1/datalab/search";
-
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         requestHeaders.put("Content-Type", "application/json");
 
-        String requestBody = "{\"startDate\":\"2022-08-16\"," +
-                "\"endDate\":\"2022-08-21\"," +
-                "\"timeUnit\":\"date\"," +
-                "\"keywordGroups\":[{\"groupName\":\"한글\"," + "\"keywords\":[\"한글\",\"korean\"]}," +
-                "{\"groupName\":\"영어\"," + "\"keywords\":[\"영어\",\"english\"]}]," +
-                "\"device\":\"pc\"," +
-                "\"ages\":[\"1\",\"2\"]," +
-                "\"gender\":\"f\"}";
+        JSONObject jsonObject = new JSONObject();
 
-        String responseBody = post(apiUrl, requestHeaders, requestBody);
+        jsonObject.put("startDate", DateParsing.weekAgoDateToyyyyMMdd());
+        jsonObject.put("endDate", DateParsing.nowDateToyyyyMMdd());
+        jsonObject.put("timeUnit", "date");
+
+        JSONArray keywordsDataArr = new JSONArray();
+        keywordsDataArr.add("은행골");
+
+        //반복
+        JSONObject keywordGroupsSubData = new JSONObject();
+        keywordGroupsSubData.put("groupName", "은행골");
+        keywordGroupsSubData.put("keywords", keywordsDataArr);
+
+        JSONArray keywordGroupsSubDataArr = new JSONArray();
+        keywordGroupsSubDataArr.add(keywordGroupsSubData);
+
+        jsonObject.put("keywordGroups",keywordGroupsSubDataArr);
+
+        System.out.println(jsonObject.toJSONString());
+
+        String requestBody = "{\"startDate\":\""+ DateParsing.weekAgoDateToyyyyMMdd()+ "\"," +
+                "\"endDate\":\"" + DateParsing.nowDateToyyyyMMdd() + "\"," +
+                "\"timeUnit\":\"date\"," +
+                "\"keywordGroups\":[{\"groupName\":\"은행골\"," + "\"keywords\":[\"은행골\"]}," +
+                "{\"groupName\":\"청진동해장국\"," + "\"keywords\":[\"청진동해장국\"]}]}";
+        System.out.println(requestBody);
+
+        String responseBody = post(apiUrl, requestHeaders, jsonObject.toJSONString());
         System.out.println(responseBody);
     }
 
