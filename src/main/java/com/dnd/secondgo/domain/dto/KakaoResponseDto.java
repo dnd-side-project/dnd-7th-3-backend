@@ -2,6 +2,7 @@ package com.dnd.secondgo.domain.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,22 +32,30 @@ public class KakaoResponseDto {
 		public String phone;
 		@ApiModelProperty(value = "장소명, 업체명", example = "로우앤슬로우")
 		public String place_name;
+//		@ApiModelProperty(value = "지역 이름을 제거한 음식점 상호명", example = "로우앤슬로우", hidden = true)
+//		@JsonProperty("place_business_name")
+//		public String placeBusinessName;
 		@ApiModelProperty(value = "장소 상세 페이지 URL", example = "http://place.map.kakao.com/1376253571")
 		public String place_url;
 		@ApiModelProperty(value = "전체 도로명 주소", example = "서울 용산구 보광로 126")
 		public String road_address_name;
-		@ApiModelProperty(value = "X 좌표 혹은 경도(longitude)", example = "126.99421849699539")
+		@ApiModelProperty(value = "X 좌표 혹은 경도(longitude)", example = "126.72401065553541")
 		public String x;
-		@ApiModelProperty(value = "Y 좌표 혹은 위도(latitude)", example = "37.53401162895581")
+		@ApiModelProperty(value = "Y 좌표 혹은 위도(latitude)", example = "37.49233331210365")
 		public String y;
 		@ApiModelProperty(value = "리뷰", example = "145")
+		@JsonProperty("review_cnt")
 		public Integer reviewCnt;
 		@ApiModelProperty(value = "한줄 리뷰", example = "최고에요!!")
+		@JsonProperty("review_text")
 		public String reviewText;
 		@ApiModelProperty(value = "이미지 url", example = "https://s3-ap-northeast-1.amazonaws.com/dcicons/new/images/web/noimage/1.jpg")
 		public List<String> img_url;
 		@ApiModelProperty(value = "태그", example = "#백년가게, #가족외식, #무료주차, #배달")
 		public String tag;
+		@ApiModelProperty(value = "주간 검색량 비율", example = "87")
+		@JsonProperty("ratio_average")
+		public int ratioAverage = 0;
 	}
 	@Data
 	public static class Meta {

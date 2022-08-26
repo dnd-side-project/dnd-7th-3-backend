@@ -117,23 +117,23 @@ public class KakaoService {
 			}
 
 			List<Document> keySetList = new ArrayList<>(map.keySet());
-
 			Collections.sort(keySetList, (o1, o2) -> (map.get(o2).compareTo(map.get(o1))));
 
-			if(keySetList.size() > Integer.parseInt(round)){
-				keySetList = keySetList.subList(0, Integer.parseInt(round));
-				
-				diningCodeService.driverInit();
-				
-				for(Document document : keySetList) {
-					diningCodeService.dinignCodeCrawling(document);
-				}
-				// 이미지 url이 없다면 제거
-				keySetList = keySetList.stream().filter(x -> x.img_url != null).collect(Collectors.toList());
+			diningCodeService.driverInit();
+			for(Document document : keySetList) {
+				diningCodeService.dinignCodeCrawling(document);
 			}
+
+			// 이미지 url이 없다면 제거
+			keySetList = keySetList.stream().filter(x -> x.img_url != null).collect(Collectors.toList());
+//			keySetList = naverService.naverPlaceSearchKeywordsRatioInfo(keySetList);
+
+			int checkRound =  roundMapping(keySetList, Integer.parseInt(round));
+			keySetList = keySetList.subList(0, checkRound);
 
 			newKakaoResponseDto.setDocuments(keySetList);
 			newKakaoResponseDto.setMeta(kakaoResponseDto.meta);
+
 		} catch(Exception e) {
 			throw e;
 		} finally {
@@ -172,5 +172,29 @@ public class KakaoService {
 				throw e;
 			}
 		}
+	}
+
+	public int roundMapping(List<Document> keySetList, int round) {
+
+		if(keySetList.size() < round) {
+			if(round == 16){
+				if(keySetList.size() >= 8)
+					return 8;
+				else if(keySetList.size() >= 4)
+					return 4;
+			}else if(round == 8){
+				if(keySetList.size() >= 4)
+					return 4;
+				else if(keySetList.size() >= 2)
+					return 2;
+			}else if(round == 4){
+				if(keySetList.size() >= 2)
+					return 2;
+			}
+		}else{
+			return round;
+		}
+
+		return round;
 	}
 }

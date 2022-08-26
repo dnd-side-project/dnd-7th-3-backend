@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
@@ -25,7 +26,7 @@ public class DiningCodeService {
 
 	private final String WEB_DRIVER_ID = "webdriver.chrome.driver"; 																	// 드라이버 ID
 	private final String WEB_DRIVER_PATH = Paths.get(AppConfig.getOsPath("dnd"), new String[]{AppConfig.getChromePath()}).toString();   // 드라이버 경로
-	
+	private NaverService naverService = null;
 	WebDriver driver = null;
 	ChromeOptions options = null;
 	JavascriptExecutor executor = null;
@@ -79,6 +80,8 @@ public class DiningCodeService {
 		
 		chromePrefs.put("profile.default_content_setting_values", defaultContentSettingValues);
 		options.setExperimentalOption("prefs", chromePrefs);
+
+		naverService = new NaverService();
 	}
 	
 	public void driverInit() {
@@ -91,6 +94,19 @@ public class DiningCodeService {
 		List<WebElement> element = driver.findElements(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div[3]/ol/li"));
 		if(element.size() > 0) {			
 			org.jsoup.nodes.Document dom = Jsoup.parse(element.get(0).getAttribute("innerHTML"));
+
+			//TODO 다이닝코드에도 지역이름이 붙어있어, 최종 발표때는 같은 비율값이 나오면 랜덤으로 내려주고, 추 후 고도화 작업 때 음식점 이름만 가져오는 로직 구현하여 진행해야함.(JKAN)
+			// ****** 가게 이름 가져오기 ******
+//			Elements placeBusinessNameElements = dom.select(".InfoHeader");
+//			if(placeBusinessNameElements.size() > 0) {
+//				String businessName = placeBusinessNameElements.get(0).text();
+//				int replaceIdx = businessName.indexOf(".");
+//				businessName = businessName.replace(" ", "").substring(replaceIdx + 1, businessName.length() -1);
+//				document.setPlaceBusinessName(businessName);
+//			} else {
+//				document.setPlaceBusinessName("");
+//			}
+			// ******************************
 
 			// ****** 리뷰 및 후기 갯수 가져오기 *****
 			Elements reviewCntElements = dom.select(".heart");
