@@ -1,6 +1,11 @@
 package com.dnd.secondgo.domain.service;
 
+import com.dnd.secondgo.domain.dto.KakaoResponseDto;
 import com.dnd.secondgo.domain.dto.NaverResponseDto;
+import com.dnd.secondgo.domain.util.DateParsingUtils;
+import com.dnd.secondgo.domain.util.JsonParserUtils;
+import lombok.NoArgsConstructor;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -51,25 +57,24 @@ public class NaverService {
         }
     }
 
-    public void naverPlaceSearchRatio(){
-
+    public List<KakaoResponseDto.Document> naverPlaceSearchKeywordsRatioInfo(List<KakaoResponseDto.Document> documents) throws ParseException {
         String apiUrl = "https://openapi.naver.com/v1/datalab/search";
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", NAVER_API_IDKEY);
         requestHeaders.put("X-Naver-Client-Secret", NAVER_API_SECRETKEY);
         requestHeaders.put("Content-Type", "application/json");
 
-        String requestBody = "{\"startDate\":\"2022-08-16\"," +
-                "\"endDate\":\"2022-08-21\"," +
-                "\"timeUnit\":\"date\"," +
-                "\"keywordGroups\":[{\"groupName\":\"한글\"," + "\"keywords\":[\"한글\",\"korean\"]}," +
-                "{\"groupName\":\"영어\"," + "\"keywords\":[\"영어\",\"english\"]}]," +
-                "\"device\":\"pc\"," +
-                "\"ages\":[\"1\",\"2\"]," +
-                "\"gender\":\"f\"}";
+        String responseBody = "";
+        for (int i = 0; i < documents.size(); i++) {
+            if(i % 5 == 0){
+                String reqBody = JsonParserUtils.StringToJsonInWorldCupInfos(documents, i);
+                System.out.println("reqBody : " + reqBody);
+                responseBody = post(apiUrl, requestHeaders, reqBody);
+                System.out.println("responseBody : " + responseBody);
+            }
+        }
 
-        String responseBody = post(apiUrl, requestHeaders, requestBody);
-        System.out.println(responseBody);
+        return JsonParserUtils.setRatioAverageValueToDocument(documents, responseBody);
     }
 
     private static String post(String apiUrl, Map<String, String> requestHeaders, String requestBody) {

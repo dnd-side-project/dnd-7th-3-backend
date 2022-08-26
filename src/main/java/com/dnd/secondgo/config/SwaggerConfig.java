@@ -28,7 +28,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.dnd.mountclim.domain.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.dnd.secondgo.domain.controller"))
                 .paths(PathSelectors.any())
                 .build();
 

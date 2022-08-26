@@ -32,8 +32,8 @@ public class WorldCupController {
 	@ApiOperation(value = "카카오 API 연동", notes = "카카오 API 를 통해 음식점 데이터를 가져온다.")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "food", value = "음식 종류", required = false, dataType = "string", paramType = "query", example = "국밥,감자탕|바|기타"),
-		@ApiImplicitParam(name = "latitude", value = "위도", required = true, dataType = "string", paramType = "query", example = "37.86898080174088"),
-		@ApiImplicitParam(name = "longitude", value = "경도", required = true, dataType = "string", paramType = "query", example = "127.71282156154844"),
+		@ApiImplicitParam(name = "latitude", value = "위도", required = true, dataType = "string", paramType = "query", example = "37.49233331210365"),
+		@ApiImplicitParam(name = "longitude", value = "경도", required = true, dataType = "string", paramType = "query", example = "126.72401065553541"),
 		@ApiImplicitParam(name = "radius", value = "거리", required = true, dataType = "string", paramType = "query", example = "1000"),
 		@ApiImplicitParam(name = "round", value = "대진표 갯수", required = true, dataType = "string", paramType = "query", example = "16")
 	})
@@ -45,7 +45,6 @@ public class WorldCupController {
 		@RequestParam(name = "round", required = true) String round) throws Exception {
 
 		RectanglePoints rectanglePoints = pointService.getRectanglePoints(Double.parseDouble(latitude), Double.parseDouble(longitude), Double.parseDouble(radius) * 0.001); // km 기준 입니다.
-
 		List<RectanglePoints> listRectanglePoints = pointService.getRectanglePoints(rectanglePoints, Double.parseDouble(radius) * 0.001 / 2);
 
 		// ***** 음식종류 처리 예시 *****

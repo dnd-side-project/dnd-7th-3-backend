@@ -46,7 +46,15 @@ server:
       encoding:
          charset: UTF-8
       context-path: /
-   
+   ssl:
+     enabled: true
+     key-alias: dnd
+     key-store: dnd.pkcs12
+     key-store-password: ${ssl.key.store.password}
+     key-password: ${ssl.key.password}
+     trust-store: dndtrust.pkcs12
+     trust-store-password: ${ssl.trust.store.password}
+
 # logging
 logging:
   level:
