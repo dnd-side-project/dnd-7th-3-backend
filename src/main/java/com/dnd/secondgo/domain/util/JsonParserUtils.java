@@ -19,9 +19,6 @@ public class JsonParserUtils {
         JSONArray keywordsDataArr = new JSONArray();
         JSONObject keywordGroupsSubData = new JSONObject();
         JSONArray keywordGroupsSubDataArr = new JSONArray();
-        for (int i = 0; i < documents.size(); i++) {
-
-        }
 
         for(KakaoResponseDto.Document doc : documents){
 

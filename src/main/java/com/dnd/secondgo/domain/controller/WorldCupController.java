@@ -47,9 +47,6 @@ public class WorldCupController {
 		RectanglePoints rectanglePoints = pointService.getRectanglePoints(Double.parseDouble(latitude), Double.parseDouble(longitude), Double.parseDouble(radius) * 0.001); // km 기준 입니다.
 		List<RectanglePoints> listRectanglePoints = pointService.getRectanglePoints(rectanglePoints, Double.parseDouble(radius) * 0.001 / 2);
 
-		// ***** 음식종류 처리 예시 *****
-		// List<String> foodList = Arrays.asList(food.split("\\|"));
-		// ***********************
 		return kakaoService.getWorldCupInfo(food, listRectanglePoints, latitude, longitude, radius, round);
 	}
 }
