@@ -23,15 +23,15 @@
 <br><hr><br>
 
 # Architecture
-![image](https://github.com/dnd-side-project/dnd-7th-3-backend/blob/develop/images/architecture.PNG)
+![image](https://user-images.githubusercontent.com/97106584/188441891-dab2b4b1-ac3a-465f-88d4-01b079050bbb.png)
+
 
 # 개발 환경
 * Java 8
 * Maven
 * Spring Boot (v2.5.6)
 * Spring Data JPA
-* Querydsl
-* MariaDB
+* Selenium
 * jUnit
 * github actions
 * aws ec2, s3
