@@ -30,7 +30,6 @@
 * Java 8
 * Maven
 * Spring Boot (v2.5.6)
-* Spring Data JPA
 * Selenium
 * jUnit
 * github actions
