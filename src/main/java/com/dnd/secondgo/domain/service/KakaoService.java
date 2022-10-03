@@ -126,7 +126,6 @@ public class KakaoService {
 
 			// 이미지 url이 없다면 제거
 			keySetList = keySetList.stream().filter(x -> x.img_url != null).collect(Collectors.toList());
-//			keySetList = naverService.naverPlaceSearchKeywordsRatioInfo(keySetList);
 
 			int checkRound =  roundMapping(keySetList, Integer.parseInt(round));
 			keySetList = keySetList.subList(0, checkRound);
