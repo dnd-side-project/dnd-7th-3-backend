@@ -11,7 +11,7 @@
   </tr> 
 </table>
 </div>
-<br><br>
+<br>
 
 ## 2. 서비스 소개
 #### "우리 이제 어디 가지?...😨"
@@ -20,7 +20,6 @@
 
 #### 　　　　　　　　　<흐름도>
 <img src="https://user-images.githubusercontent.com/61836238/193735388-0a8e96a9-bf5f-499f-9676-0b643cdbc93d.PNG" width="400" height="400" align='center'>
-<br><br>
 
 ## 3. 화면
 <div>
@@ -36,8 +35,7 @@
 
 ## 4. Architecture
 ![architecture](https://user-images.githubusercontent.com/61836238/193740893-bb7b50d0-56e9-49bf-888b-40cc11e81555.png)
-
-<br><br>
+<br>
 
 ## 5. 개발 환경
 * Java 8
@@ -56,7 +54,7 @@
 <b>1. [Kakao Open API - 카테고리로 장소 검색하기](https://developers.kakao.com/docs/latest/ko/local/dev-guide#search-by-category)</b><br>
 <b>2. [Naver Open API - 블로그 검색](https://developers.naver.com/docs/serviceapi/search/blog/blog.md)</b><br>
 <b>3. [Naver Open API - 통합 검색어 트랜드](https://developers.naver.com/docs/serviceapi/datalab/search/search.md)</b><br>
-<br><br>
+<br>
 
 ## 7. 참고 사항
 #### 1. 지정된 구역에서 16개의 포인트를 기준으로 API를 요청하는 이유
@@ -66,4 +64,3 @@
 &nbsp;검색된 음식점들 중에서 사용자가 진행할 월드컵 게임에 들어갈 음식점은 '검색량'과 '거리'를 가지고 선정하였다. 검색량과 거리의 가중치는 7:3으로 선정한 후 계산을 하였다.
 #### 3. 주간 인기 검색순
 &nbsp;월드컵 게임에 있는 음식점들을 '주간 인기 검색순'으로 확인 할 수 있다. 이는 네이버 일주일 검색량의 평균치를 통하여 순위를 매긴 후 서비스를 제공하였다. 
-<br><br>
