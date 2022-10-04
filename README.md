@@ -1,4 +1,4 @@
-# [2차 갈래?](https://www.2ndgo.kr/)
+# [2차 갈래?](https://www.2ndgo.kr/)🍖🍻
 
 ## 1. 💻 Developer
 
