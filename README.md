@@ -1,4 +1,4 @@
-# dnd-7th-3-backend
+# [2차 갈래?](https://www.2ndgo.kr/)
 
 ## 1. 💻 Developer
 
