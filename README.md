@@ -1,6 +1,6 @@
 # dnd-7th-3-backend
 
-## 💻 Developer
+## 1. 💻 Developer
 
 <div align="center">
 <table>
@@ -11,89 +11,59 @@
   </tr> 
 </table>
 </div>
-<br><hr><br>
+<br><br>
 
-## 목차
-* **[Architecture](#Architecture)**
-* **[개발 환경](#개발-환경)**
-* **[코딩 컨벤션](#코딩-컨벤션)**
-* **[코드 포맷팅](#코드-포맷팅)**
-* **[Git 컨벤션과 브랜치 전략](#Git-컨벤션과-브랜치-전략)**
+## 2. 서비스 소개
+#### "우리 이제 어디 가지?...😨"
+1차 장소에서 즐거운 시간을 보낸 후, 2차 장소 선정에 어려움을 겪으신 경험이 있으신가요?<br>
+이러한 문제를 해결하고자 <b>2차 장소를 쉽게 재미있게 선정하는 서비스</b>를 기획하였습니다.<br>
 
-<br><hr><br>
+#### 　　　　　　　　　<흐름도>
+<img src="https://user-images.githubusercontent.com/61836238/193735388-0a8e96a9-bf5f-499f-9676-0b643cdbc93d.PNG" width="400" height="400" align='center'>
+<br><br>
 
-# Architecture
-![image](https://github.com/dnd-side-project/dnd-7th-3-backend/blob/develop/images/architecture.PNG)
+## 3. 화면
+<div>
+<img src="https://user-images.githubusercontent.com/61836238/193739452-03e74dba-8ca8-4171-8368-e23c4189fc2e.png" width="225" height="487" align='center'>
+<img src="https://user-images.githubusercontent.com/61836238/193739494-db8dc2ad-4e85-47df-a87f-9917ceb63a94.png" width="225" height="487" align='center'>
+<img src="https://user-images.githubusercontent.com/61836238/193739577-ff0f5dfb-a3be-45e7-ae0c-933b18d1d2be.png" width="225" height="487" align='center'>
+<img src="https://user-images.githubusercontent.com/61836238/193739592-8ce13507-aabe-4d4e-bbb2-a2ce955c0161.png" width="225" height="487" align='center'><br><br>
+<img src="https://user-images.githubusercontent.com/61836238/193739619-9ca501d0-26ae-4078-8880-acaf3a9dd861.png" width="225" height="487" align='center'>
+<img src="https://user-images.githubusercontent.com/61836238/193739643-c0fbb8df-68a4-411b-9611-7776172245b7.png" width="225" height="487" align='center'>
+<img src="https://user-images.githubusercontent.com/61836238/193739659-67dfed68-b7af-4f78-a23c-e817d315a70b.png" width="225" height="487" align='center'>
+<img src="https://user-images.githubusercontent.com/61836238/193740418-1a9c211f-9cc5-44da-b5bc-dfb0fa4970b0.png" width="225" height="487" align='center'><br><br>
+</div>
 
-# 개발 환경
+## 4. Architecture
+![architecture](https://user-images.githubusercontent.com/61836238/193740893-bb7b50d0-56e9-49bf-888b-40cc11e81555.png)
+
+<br><br>
+
+## 5. 개발 환경
 * Java 8
 * Maven
 * Spring Boot (v2.5.6)
-* Spring Data JPA
+* Selenium
 * Querydsl
-* MariaDB
-* jUnit
-* github actions
-* aws ec2, s3
+* JUnit
+* Github actions
+* AWS EC2
+* AWS S3
+* AWS CodeDeploy
+<br><br>
 
-# 코딩 컨벤션
-## Naming
-1. 변수는 CamelCase를 기본으로 한다.
-- `userEmail`, `userCellPhone` ...
-2. URL, 파일명 등은 kebab-case를 사용한다.
-- `/user-email-page` ...
-3. 패키지명은 단어가 달라지더라도 무조건 소문자를 사용한다.
-- `frontend`, `useremail` ...
-4. ENUM이나 상수는 대문자로 네이밍한다.
-- `NORMAL_STATUS` ...
-5. 함수명은 소문자로 시작하고 동사로 네이밍한다.
-- `getUserId()`, `isNormal()` ...
-6. 클래스명은 명사로 작성하고 UpperCamelCase를 사용한다.
-- `UserEmail`, `Address` ...
-7. 컬렉션은 복수형을 사용하거나 컬렉션을 명시해준다.
-- `List ids`, `Map<User, Int> userToIdMap` ...
-## Structure
-1. 패키지는 목적별로 묶는다.
-- `domain(domain 관련 패키지)`, `common(공통 관련 패키지)`
-2. 하나의 메소드와 클래스는 하나의 목적을 두게 만든다.
-- 하나의 메소드 안에서 한가지 일만 해야한다.
-- 하나의 클래스 안에서는 같은 목적을 둔 코드들의 집합이여야한다.
-## Programming
-1. 반복되는 코드를 작성하지 않는다.
-2. 변수는 최대한 사용하는 위치에 가깝게 사용한다.
-3. 조건문에 부정조건을 넣는 것을 피한다.
-```java
-if(status.isNormal()) (O) / if(!status.isAbnormal()) (X)
-```
+## 6. 사용한 Open API 정보
+<b>1. [Kakao Open API - 카테고리로 장소 검색하기](https://developers.kakao.com/docs/latest/ko/local/dev-guide#search-by-category)</b><br>
+<b>2. [Naver Open API - 블로그 검색](https://developers.naver.com/docs/serviceapi/search/blog/blog.md)</b><br>
+<b>3. [Naver Open API - 통합 검색어 트랜드](https://developers.naver.com/docs/serviceapi/datalab/search/search.md)</b><br>
+<br><br>
 
-# 코드 포맷팅
-- tab size : 4
-- indent : 4
-
-# Git 컨벤션과 브랜치 전략
-## 브랜치 이름
-`브랜치타입/이슈ID`
-- 브랜치를 생성하고나서 PR 이후 merge된 브랜치는 삭제한다.
-## 브랜치 타입과 전략
-- `main` : 배포 가능한 상태만을 관리
-- `develop` : 해당 브랜치를 기반으로 개발을 진행하며 모든 기능이 추가되고 버그가 수정되어 배포 가능한 상태라면 'master' 브랜치에 merge
-- `feature` : 새로운 기능 개발 및 버그 수정이 필요할 때마다 'develop' 브랜치로부터 분기
-- `hotfix` : 배포한 버전에 긴급하게 수정을 해야 할 필요가 있을 경우, 'main' 브랜치에서 분기하는 브랜치
-
-![gitflow](https://github.com/dnd-side-project/dnd-7th-3-backend/blob/develop/images/gitflow.PNG)
-
-## 커밋 메시지
-```
-type: 내용
-^--^  ^---^
-|     |
-|
-+-------> Type: chore, docs, feat, fix, refactor, style, or test.
-```
-- `feat`: 새로운 기능 추가
-- `fix`: 버그 수정
-- `docs`: 문서 수정
-- `style`: 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우
-- `refactor`: 코드 리팩토링
-- `test`: 테스트 코드, 리펙토링 테스트 코드 추가
-- `chore`: 빌드 업무 수정, 의존성 파일 수정
+## 7. 참고 사항
+#### 1. 지정된 구역에서 16개의 포인트를 기준으로 API를 요청하는 이유
+&nbsp;구역의 크기에 상관없이 한번 API를 요청할 때 최대 45개의 문서(음식점의 정보)를 가지고 올 수 있다. 이를 고려하여 많이 요청하여 많은 문서(식당)를 얻고자 해당 구역의 16개의 지점(파란점)에서 API를 호출하였다. <b>(45개(기존) vs 720(=16 x 45)(변경후))</b><br>
+<img src="https://user-images.githubusercontent.com/61836238/193741017-6bcf19f0-83de-4243-8fd8-baf4942ddbd3.PNG" width="100" height="100" align='center'>
+#### 2. 라운드에 맞는 식당 선정 기준
+&nbsp;검색된 음식점들 중에서 사용자가 진행할 월드컵 게임에 들어갈 음식점은 '검색량'과 '거리'를 가지고 선정하였다. 검색량과 거리의 가중치는 7:3으로 선정한 후 계산을 하였다.
+#### 3. 주간 인기 검색순
+&nbsp;월드컵 게임에 있는 음식점들을 '주간 인기 검색순'으로 확인 할 수 있다. 이는 네이버 일주일 검색량의 평균치를 통하여 순위를 매긴 후 서비스를 제공하였다. 
+<br><br>
