@@ -33,16 +33,11 @@
 <img src="https://user-images.githubusercontent.com/61836238/193740418-1a9c211f-9cc5-44da-b5bc-dfb0fa4970b0.png" width="225" height="487" align='center'><br><br>
 </div>
 
-## 4. Architecture
-![architecture](https://user-images.githubusercontent.com/61836238/193740893-bb7b50d0-56e9-49bf-888b-40cc11e81555.png)
-<br>
-
-## 5. 개발 환경
+## 4. 개발 환경
 * Java 8
 * Maven
 * Spring Boot (v2.5.6)
 * Selenium
-* Querydsl
 * JUnit
 * Github actions
 * AWS EC2
@@ -50,13 +45,13 @@
 * AWS CodeDeploy
 <br><br>
 
-## 6. 사용한 Open API 정보
+## 5. 사용한 Open API 정보
 <b>1. [Kakao Open API - 카테고리로 장소 검색하기](https://developers.kakao.com/docs/latest/ko/local/dev-guide#search-by-category)</b><br>
 <b>2. [Naver Open API - 블로그 검색](https://developers.naver.com/docs/serviceapi/search/blog/blog.md)</b><br>
 <b>3. [Naver Open API - 통합 검색어 트랜드](https://developers.naver.com/docs/serviceapi/datalab/search/search.md)</b><br>
 <br>
 
-## 7. 참고 사항
+## 6. 참고 사항
 #### 1. 지정된 구역에서 16개의 포인트를 기준으로 API를 요청하는 이유
 &nbsp;구역의 크기에 상관없이 한번 API를 요청할 때 최대 45개의 문서(음식점의 정보)를 가지고 올 수 있다. 이를 고려하여 많이 요청하여 많은 문서(식당)를 얻고자 해당 구역의 16개의 지점(파란점)에서 API를 호출하였다. <b>(45개(기존) vs 720(=16 x 45)(변경후))</b><br>
 <img src="https://user-images.githubusercontent.com/61836238/193741017-6bcf19f0-83de-4243-8fd8-baf4942ddbd3.PNG" width="100" height="100" align='center'>
